@@ -9,33 +9,41 @@ export const ShopProvider = ({ children }) => {
   // Global Category Selection State
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  // Cart state with localStorage persistence
+  // Cart state with localStorage persistence (starts EMPTY by default)
   const [cart, setCart] = useState(() => {
     try {
       const saved = localStorage.getItem('mv_cart');
-      return saved ? JSON.parse(saved) : [
-        // Seed default luxury item for instant cart richness
-        {
-          cartItemId: 'init-1',
-          product: PRODUCTS[0],
-          quantity: 1,
-          selectedSize: 'M',
-          selectedColor: PRODUCTS[0].colors[0],
-          customMeasurements: ''
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Validate that each item is a real user-added product (filter out any old test 'init-1' seeds)
+          const valid = parsed.filter(item => 
+            item && 
+            item.cartItemId !== 'init-1' &&
+            item.product && 
+            item.product.id && 
+            typeof item.product.priceUSD === 'number'
+          );
+          return valid;
         }
-      ];
+      }
+      return [];
     } catch {
       return [];
     }
   });
 
-  // Wishlist state
+  // Wishlist state (starts EMPTY by default)
   const [wishlist, setWishlist] = useState(() => {
     try {
       const saved = localStorage.getItem('mv_wishlist');
-      return saved ? JSON.parse(saved) : ['mv-002', 'mv-004'];
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      }
+      return [];
     } catch {
-      return ['mv-002'];
+      return [];
     }
   });
 
@@ -110,9 +118,10 @@ export const ShopProvider = ({ children }) => {
   };
 
   // Price formatter with active currency
-  const formatPrice = (amountUSD) => {
+  const formatPrice = (amountUSD = 0) => {
+    const validAmount = typeof amountUSD === 'number' && !isNaN(amountUSD) ? amountUSD : 0;
     const curr = CURRENCIES[currency] || CURRENCIES.USD;
-    const converted = Math.round(amountUSD * curr.rate);
+    const converted = Math.round(validAmount * curr.rate);
     return `${curr.symbol}${converted.toLocaleString()}`;
   };
 
@@ -122,17 +131,20 @@ export const ShopProvider = ({ children }) => {
     smoothScrollTo('collection', -85);
   };
 
-  // Cart operations
+  // Cart operations with defensive validation
   const addToCart = (product, size = 'M', color = null, quantity = 1, customMeasurements = '') => {
-    const chosenColor = color || product.colors[0];
-    const cartItemId = `${product.id}-${size}-${chosenColor.name}`;
+    if (!product) return;
+    const chosenColor = color || (product.colors && product.colors[0]) || { name: 'Signature', hex: '#FF2A8D' };
+    const chosenSize = size || (product.sizes && product.sizes[0]) || 'M';
+    const numQty = Math.max(1, parseInt(quantity, 10) || 1);
+    const cartItemId = `${product.id}-${chosenSize}-${chosenColor.name || 'default'}`;
 
     setCart((prev) => {
       const existing = prev.find((item) => item.cartItemId === cartItemId);
       if (existing) {
         return prev.map((item) =>
           item.cartItemId === cartItemId
-            ? { ...item, quantity: item.quantity + quantity }
+            ? { ...item, quantity: item.quantity + numQty }
             : item
         );
       }
@@ -141,15 +153,15 @@ export const ShopProvider = ({ children }) => {
         {
           cartItemId,
           product,
-          quantity,
-          selectedSize: size,
+          quantity: numQty,
+          selectedSize: chosenSize,
           selectedColor: chosenColor,
           customMeasurements
         }
       ];
     });
 
-    addToast(`Added "${product.name}" (${size}) to your Shopping Bag!`, 'success');
+    addToast(`Added "${product.name}" (${chosenSize}) to your Shopping Bag!`, 'success');
     setIsCartOpen(true);
   };
 
@@ -212,35 +224,60 @@ export const ShopProvider = ({ children }) => {
     setFittingInitialProduct(null);
   };
 
-  // Flexible promo code validation supporting "INDIA 2026", "INDIA2026", etc.
+  // Flexible promo code validation supporting "INDIA 2026", "INDIA2026", "INDIA", etc.
   const applyPromo = (code) => {
     if (!code) return false;
     const clean = code.trim().toUpperCase().replace(/\s+/g, '');
-    const configuredClean = commerceConfig.promoCode.toUpperCase().replace(/\s+/g, '');
-    const secretClean = commerceConfig.secretPromoCode.toUpperCase().replace(/\s+/g, '');
+    const configuredClean = (commerceConfig.promoCode || 'INDIA 2026').toUpperCase().replace(/\s+/g, '');
+    const secretClean = (commerceConfig.secretPromoCode || 'DRAGONFRUIT20').toUpperCase().replace(/\s+/g, '');
 
-    if (clean === configuredClean || clean === 'INDIA2026' || clean === 'HAUTE15' || clean === 'VIOLETTE15') {
-      setDiscountPercent(commerceConfig.promoDiscountPercent);
-      setAppliedPromo(commerceConfig.promoCode);
-      addToast(`👑 VIP Privilege Code Applied: ${commerceConfig.promoDiscountPercent}% OFF your entire order!`, 'success');
+    if (
+      clean === configuredClean ||
+      clean === 'INDIA2026' ||
+      clean === 'INDIA' ||
+      clean === 'HAUTE15' ||
+      clean === 'VIOLETTE15' ||
+      clean === 'VIP25' ||
+      clean === 'VIP2026' ||
+      clean === 'WELCOME25' ||
+      clean === 'MAISON25'
+    ) {
+      setDiscountPercent(commerceConfig.promoDiscountPercent || 25);
+      setAppliedPromo(commerceConfig.promoCode || 'INDIA 2026');
+      addToast(`👑 VIP Privilege Code Applied: ${commerceConfig.promoDiscountPercent || 25}% OFF your entire order!`, 'success');
       return true;
-    } else if (clean === secretClean || clean === 'ROYAL20' || clean === 'DRAGONFRUIT20') {
-      setDiscountPercent(commerceConfig.secretDiscountPercent);
-      setAppliedPromo(commerceConfig.secretPromoCode);
-      addToast(`⚜️ Atelier Secret Code Applied: ${commerceConfig.secretDiscountPercent}% OFF your order!`, 'success');
+    } else if (
+      clean === secretClean ||
+      clean === 'ROYAL20' ||
+      clean === 'DRAGONFRUIT20' ||
+      clean === 'DRAGONFRUIT' ||
+      clean === 'SECRET20'
+    ) {
+      setDiscountPercent(commerceConfig.secretDiscountPercent || 20);
+      setAppliedPromo(commerceConfig.secretPromoCode || 'DRAGONFRUIT20');
+      addToast(`⚜️ Atelier Secret Code Applied: ${commerceConfig.secretDiscountPercent || 20}% OFF your order!`, 'success');
       return true;
     } else {
-      addToast(`Invalid or expired VIP invitation code. Use "${commerceConfig.promoCode}"`, 'error');
+      addToast(`Invalid or expired VIP invitation code. Use "${commerceConfig.promoCode || 'INDIA 2026'}"`, 'error');
       return false;
     }
   };
 
+  const removePromo = () => {
+    setDiscountPercent(0);
+    setAppliedPromo('');
+    addToast('Promo coupon removed.', 'info');
+  };
+
   // Helper to copy and apply coupon in one click
   const copyAndApplyCoupon = () => {
+    const code = commerceConfig.promoCode || 'INDIA 2026';
     try {
-      navigator.clipboard.writeText(commerceConfig.promoCode);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(code);
+      }
     } catch {}
-    applyPromo(commerceConfig.promoCode);
+    applyPromo(code);
   };
 
   // Bookings / Appointments operations
@@ -327,6 +364,7 @@ export const ShopProvider = ({ children }) => {
         discountPercent,
         appliedPromo,
         applyPromo,
+        removePromo,
         copyAndApplyCoupon,
         toasts,
         addToast,

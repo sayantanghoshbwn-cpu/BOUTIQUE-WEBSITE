@@ -28,6 +28,7 @@ export const CheckoutModal = () => {
     cartTotalUSD,
     appliedPromo,
     applyPromo,
+    removePromo,
     addToast
   } = useShop();
 
@@ -110,7 +111,7 @@ export const CheckoutModal = () => {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto bg-cardBg border border-cardBorder rounded-3xl p-6 md:p-10 shadow-2xl z-10 animate-in zoom-in-95 duration-300">
+      <div className="relative w-full max-w-4xl max-h-[88dvh] sm:max-h-[92vh] overflow-y-auto bg-cardBg border border-cardBorder rounded-3xl p-4 sm:p-6 md:p-10 shadow-2xl z-10 animate-in zoom-in-95 duration-300">
         
         {/* Close Button */}
         <button
@@ -126,22 +127,22 @@ export const CheckoutModal = () => {
               <Lock className="w-3.5 h-3.5" />
               <span>Encrypted Haute Couture Checkout</span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-fashion font-bold text-mainHeading mb-8">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-fashion font-bold text-mainHeading mb-6 sm:mb-8">
               Bespoke Order Acquisition
             </h2>
 
-            <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
               
               {/* Left Form (7 cols) */}
-              <div className="lg:col-span-7 space-y-6">
+              <div className="lg:col-span-7 space-y-5 sm:space-y-6">
                 
                 {/* Patron Shipping Details */}
-                <div className="space-y-4">
-                  <h3 className="text-sm font-fashion font-bold text-mainHeading uppercase tracking-wider border-b border-cardBorder pb-2">
+                <div className="space-y-3 sm:space-y-4">
+                  <h3 className="text-xs sm:text-sm font-fashion font-bold text-mainHeading uppercase tracking-wider border-b border-cardBorder pb-2">
                     1. Patron & Insured Delivery Address
                   </h3>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-semibold text-lightLavender mb-1">First Name *</label>
                       <input
@@ -168,7 +169,7 @@ export const CheckoutModal = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-semibold text-lightLavender mb-1">Email *</label>
                       <input
@@ -207,7 +208,7 @@ export const CheckoutModal = () => {
                     {errors.address && <span className="text-[10px] text-[#FF5C7A]">{errors.address}</span>}
                   </div>
 
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
                       <label className="block text-xs font-semibold text-lightLavender mb-1">City *</label>
                       <input
@@ -321,74 +322,94 @@ export const CheckoutModal = () => {
                 </h3>
 
                 {/* Items preview */}
-                <div className="max-h-48 overflow-y-auto space-y-3 pr-1">
-                  {cart.map((item) => (
-                    <div key={item.cartItemId} className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={item.product.images[0]}
-                          alt={item.product.name}
-                          className="w-10 h-12 rounded-lg object-cover border border-cardBorder"
-                        />
-                        <div>
-                          <p className="font-semibold text-mainHeading line-clamp-1">{item.product.name}</p>
-                          <p className="text-[10px] text-mutedLavender">Qty: {item.quantity} • Size: {item.selectedSize}</p>
+                <div className="max-h-48 overflow-y-auto overscroll-contain space-y-3 pr-1 no-scrollbar">
+                  {cart.map((item) => {
+                    const prod = item.product || {};
+                    const imgSrc = (prod.images && prod.images[0]) || '';
+                    const price = prod.priceUSD || 0;
+                    const qty = item.quantity || 1;
+
+                    return (
+                      <div key={item.cartItemId} className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          {imgSrc && (
+                            <img
+                              src={imgSrc}
+                              alt={prod.name || 'Creation'}
+                              className="w-10 h-12 rounded-lg object-cover border border-cardBorder shrink-0"
+                            />
+                          )}
+                          <div className="min-w-0">
+                            <p className="font-semibold text-mainHeading truncate">{prod.name}</p>
+                            <p className="text-[10px] text-mutedLavender">
+                              Qty: {qty} • Size: {item.selectedSize || 'M'}
+                            </p>
+                          </div>
                         </div>
+                        <span className="font-fashion font-bold text-lightLavender shrink-0 ml-2">
+                          {formatPrice(price * qty)}
+                        </span>
                       </div>
-                      <span className="font-fashion font-bold text-lightLavender">
-                        {formatPrice(item.product.priceUSD * item.quantity)}
-                      </span>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* VIP Promo Code Application Box in Checkout */}
-                <div className="p-3 rounded-2xl bg-cardBg border border-cardBorder/90 space-y-2">
+                <div className="p-3.5 rounded-2xl bg-cardBg border border-cardBorder/90 space-y-2.5">
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] font-semibold text-lightLavender flex items-center gap-1.5">
-                      <Tag className="w-3 h-3 text-dragonfruit" />
-                      <span>VIP Privilege Code</span>
+                      <Tag className="w-3.5 h-3.5 text-dragonfruit" />
+                      <span>VIP Privilege Coupon</span>
                     </span>
                     {!appliedPromo && (
                       <button
                         type="button"
                         onClick={() => applyPromo(commerceConfig.promoCode)}
-                        className="text-[10px] font-mono font-bold text-dragonfruit hover:underline cursor-pointer"
+                        className="text-[10.5px] font-mono font-bold text-dragonfruit hover:underline flex items-center gap-1 cursor-pointer"
                       >
-                        Apply "{commerceConfig.promoCode}"
+                        <span>Use "{commerceConfig.promoCode}" ({commerceConfig.promoDiscountPercent}% OFF)</span>
                       </button>
                     )}
                   </div>
 
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={checkoutPromoInput}
-                      onChange={(e) => setCheckoutPromoInput(e.target.value)}
-                      placeholder={`Enter VIP Code (e.g. ${commerceConfig.promoCode})`}
-                      className="flex-1 px-3 py-1.5 rounded-xl bg-inputBg border border-inputBorder text-mainHeading text-xs placeholder:text-mutedLavender/50 focus:outline-none focus:border-dragonfruit uppercase font-mono font-semibold"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (checkoutPromoInput.trim()) {
-                          applyPromo(checkoutPromoInput);
-                          setCheckoutPromoInput('');
-                        }
-                      }}
-                      className="px-3.5 py-1.5 rounded-xl bg-dragonfruit text-white text-xs font-semibold hover:bg-[#FF4696] hover:text-[#1E1033] shadow-dragonfruit transition-colors cursor-pointer"
-                    >
-                      Apply
-                    </button>
-                  </div>
-
-                  {appliedPromo && (
-                    <div className="flex items-center justify-between text-xs text-[#35D07F] bg-[#182C25] p-2 rounded-xl border border-[#35D07F]/40">
-                      <span className="flex items-center gap-1 font-semibold">
-                        <Sparkles className="w-3 h-3 text-[#35D07F]" />
-                        <span>{appliedPromo} (25% Privilege Applied)</span>
-                      </span>
-                      <span className="font-bold">-{formatPrice(discountAmountUSD)}</span>
+                  {!appliedPromo ? (
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={checkoutPromoInput}
+                        onChange={(e) => setCheckoutPromoInput(e.target.value)}
+                        placeholder={`Enter VIP code (e.g. ${commerceConfig.promoCode})`}
+                        className="flex-1 px-3 py-2 rounded-xl bg-inputBg border border-inputBorder text-mainHeading text-xs placeholder:text-mutedLavender/50 focus:outline-none focus:border-dragonfruit uppercase font-mono font-semibold"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (checkoutPromoInput.trim()) {
+                            applyPromo(checkoutPromoInput);
+                            setCheckoutPromoInput('');
+                          }
+                        }}
+                        className="px-4 py-2 rounded-xl bg-dragonfruit text-white text-xs font-semibold hover:bg-[#FF4696] hover:text-[#1E1033] shadow-dragonfruit transition-colors cursor-pointer shrink-0"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between text-xs text-[#35D07F] bg-[#182C25] p-2.5 rounded-xl border border-[#35D07F]/40">
+                      <div className="flex items-center gap-1.5 font-semibold">
+                        <Sparkles className="w-3.5 h-3.5 text-[#35D07F]" />
+                        <span>Code "{appliedPromo}" ({discountPercent}% Discount Applied)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold">-{formatPrice(discountAmountUSD)}</span>
+                        <button
+                          type="button"
+                          onClick={removePromo}
+                          className="text-[10px] text-mutedLavender hover:text-red-400 underline cursor-pointer"
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>

@@ -118,7 +118,7 @@ export const FittingModal = () => {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto bg-cardBg border border-cardBorder rounded-3xl p-5 sm:p-8 shadow-2xl z-10 animate-in zoom-in-95 duration-300">
+      <div className="relative w-full max-w-xl max-h-[88dvh] sm:max-h-[92vh] overflow-y-auto bg-cardBg border border-cardBorder rounded-3xl p-4 sm:p-8 shadow-2xl z-10 animate-in zoom-in-95 duration-300">
         
         {/* Close Button */}
         <button
@@ -131,12 +131,12 @@ export const FittingModal = () => {
         {!isSuccess ? (
           <div>
             {/* Header */}
-            <div className="text-center mb-6">
+            <div className="text-center mb-5 sm:mb-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-inputBg border border-inputBorder text-dragonfruit text-xs font-semibold tracking-widest uppercase mb-2">
                 <Scissors className="w-3.5 h-3.5" />
                 <span>Private Consultation</span>
               </div>
-              <h3 className="text-2xl md:text-3xl font-fashion font-bold text-mainHeading">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-fashion font-bold text-mainHeading">
                 Book a VIP Fitting
               </h3>
               <p className="text-xs text-mutedLavender mt-1 max-w-sm mx-auto">

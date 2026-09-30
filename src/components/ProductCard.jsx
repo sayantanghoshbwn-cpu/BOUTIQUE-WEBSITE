@@ -12,13 +12,16 @@ export const ProductCard = ({ product }) => {
   } = useShop();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+  const [selectedColor, setSelectedColor] = useState(() => (product.colors && product.colors[0]) || { name: 'Signature', hex: '#FF2A8D' });
+  const [selectedSize, setSelectedSize] = useState(() => (product.sizes && product.sizes[0]) || 'M');
+  const [justAdded, setJustAdded] = useState(false);
   const isWishlisted = isInWishlist(product.id);
 
   const handleQuickAdd = (e) => {
     e.stopPropagation();
     addToCart(product, selectedSize, selectedColor, 1);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1800);
   };
 
   return (
@@ -190,10 +193,23 @@ export const ProductCard = ({ product }) => {
           {/* Primary Action Button: Dragonfruit with White text, hover effect */}
           <button
             onClick={handleQuickAdd}
-            className="px-4 py-2 rounded-xl bg-dragonfruit text-white text-xs font-semibold tracking-wider uppercase shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] hover:shadow-dragonfruit-lg transition-all duration-300 flex items-center gap-1.5 cursor-pointer font-sans"
+            className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all duration-300 flex items-center gap-1.5 cursor-pointer font-sans ${
+              justAdded
+                ? 'bg-[#35D07F] text-[#120824] font-bold shadow-[0_0_15px_rgba(53,208,127,0.6)] scale-105'
+                : 'bg-dragonfruit text-white shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] hover:shadow-dragonfruit-lg'
+            }`}
           >
-            <ShoppingBag className="w-3 h-3" />
-            <span>Add</span>
+            {justAdded ? (
+              <>
+                <Check className="w-3.5 h-3.5 stroke-[3]" />
+                <span>Added ✓</span>
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="w-3 h-3" />
+                <span>Add</span>
+              </>
+            )}
           </button>
         </div>
 

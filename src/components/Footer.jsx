@@ -9,7 +9,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer id="salons" className="bg-[#0c0519] text-lightLavender border-t border-cardBorder pt-14 sm:pt-16 pb-12 scroll-mt-20">
+    <footer id="salons" className="bg-[#0c0519] text-lightLavender border-t border-cardBorder pt-14 sm:pt-16 pb-28 lg:pb-12 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Top Footer Grid */}

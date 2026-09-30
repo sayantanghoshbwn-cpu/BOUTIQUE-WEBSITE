@@ -63,8 +63,11 @@
   .dragonfruit-gradient {
     background: linear-gradient(135deg, #FF2A8D 0%, #FF4696 50%, #D81B60 100%);
   }
-  .gold-shimmer {
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
-    background-size: 200% 100%;
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

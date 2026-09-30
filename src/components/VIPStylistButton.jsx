@@ -39,17 +39,17 @@ export const VIPStylistButton = () => {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-[998]">
+    <div className="fixed bottom-20 sm:bottom-20 lg:bottom-6 left-3 sm:left-6 z-30">
       {/* Floating Trigger Button */}
       {!isOpen ? (
         <button
           onClick={() => setIsOpen(true)}
-          className="group flex items-center gap-3 px-4 py-3 rounded-full bg-darkViolet border border-cardBorder text-lightLavender shadow-2xl hover:border-dragonfruit hover:shadow-dragonfruit transition-all duration-300 transform hover:scale-105 cursor-pointer"
+          className="group flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-full bg-darkViolet/95 backdrop-blur-md border border-cardBorder text-lightLavender shadow-2xl hover:border-dragonfruit hover:shadow-dragonfruit transition-all duration-300 transform hover:scale-105 cursor-pointer"
           title="Connect with VIP Stylist"
         >
           <div className="relative">
-            <div className="w-8 h-8 rounded-full bg-dragonfruit flex items-center justify-center text-white shadow-[0_0_12px_#FF2A8D]">
-              <MessageCircle className="w-4 h-4" />
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-dragonfruit flex items-center justify-center text-white shadow-[0_0_12px_#FF2A8D]">
+              <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
             <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#35D07F] rounded-full border-2 border-darkViolet" />
           </div>
@@ -64,7 +64,7 @@ export const VIPStylistButton = () => {
         </button>
       ) : (
         /* Chat Box Popover */
-        <div className="w-80 sm:w-96 rounded-3xl bg-cardBg border border-cardBorder shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 flex flex-col">
+        <div className="w-[calc(100vw-24px)] max-w-sm sm:w-96 rounded-3xl bg-cardBg border border-cardBorder shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 flex flex-col">
           {/* Header */}
           <div className="p-4 bg-darkViolet border-b border-cardBorder flex items-center justify-between">
             <div className="flex items-center gap-3">

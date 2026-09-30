@@ -114,85 +114,21 @@ export const HeroSection = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-fashion font-bold text-mainHeading leading-[1.08] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-fashion font-bold text-mainHeading leading-[1.1] sm:leading-[1.08] tracking-tight">
             {current.title}
           </h1>
 
           {/* Subtitle */}
-          <p className="text-sm sm:text-base lg:text-lg text-lightLavender/90 font-light leading-relaxed max-w-xl">
+          <p className="text-xs sm:text-base lg:text-lg text-lightLavender/90 font-light leading-relaxed max-w-xl">
             {current.subtitle}
           </p>
 
-          {/* In-Page Interactive VIP Privilege Coupon & Application Bar */}
-          <div className="w-full max-w-xl p-3 sm:p-3.5 rounded-2xl bg-[#281640]/95 backdrop-blur-md border border-dragonfruit/50 shadow-[0_0_25px_rgba(255,42,141,0.25)] space-y-2.5">
-            
-            {/* Top row: VIP offer details & 1-click button */}
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Crown className="w-4 h-4 text-dragonfruit shrink-0 animate-pulse" />
-                <div>
-                  <span className="text-xs font-fashion font-bold text-mainHeading">
-                    VIP Privilege: <span className="text-dragonfruit">{commerceConfig.promoDiscountPercent}% OFF</span> Entire Order
-                  </span>
-                </div>
-              </div>
-
-              {/* 1-Click Tap to Apply Chip */}
-              <button
-                type="button"
-                onClick={handleCopyAndApply}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-dragonfruit text-white text-xs font-mono font-bold uppercase shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] transition-all cursor-pointer shrink-0"
-                title="Click to apply INDIA 2026 coupon"
-              >
-                <Tag className="w-3 h-3" />
-                <span>{commerceConfig.promoCode}</span>
-                {copied ? <Check className="w-3 h-3 text-white" /> : <Copy className="w-3 h-3 opacity-80" />}
-              </button>
-            </div>
-
-            {/* Bottom row: Direct Apply Input Form */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (heroPromoInput.trim()) {
-                  applyPromo(heroPromoInput);
-                  setHeroPromoInput('');
-                }
-              }}
-              className="flex items-center gap-2 pt-1 border-t border-cardBorder/60"
-            >
-              <div className="relative flex-1">
-                <Tag className="w-3.5 h-3.5 text-mutedLavender absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                <input
-                  type="text"
-                  value={heroPromoInput}
-                  onChange={(e) => setHeroPromoInput(e.target.value)}
-                  placeholder={`Apply coupon code (e.g. ${commerceConfig.promoCode})`}
-                  className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-inputBg border border-inputBorder text-mainHeading text-xs placeholder:text-mutedLavender/60 focus:outline-none focus:border-dragonfruit uppercase font-mono font-semibold"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-4 py-1.5 rounded-xl bg-cardBg border border-cardBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit text-xs font-semibold transition-all cursor-pointer shrink-0"
-              >
-                Apply
-              </button>
-            </form>
-
-            {appliedPromo && (
-              <div className="text-[11px] text-[#35D07F] font-semibold flex items-center gap-1.5 bg-[#182C25] px-2.5 py-1 rounded-lg border border-[#35D07F]/40">
-                <Check className="w-3.5 h-3.5" />
-                <span>Active VIP Privilege: <strong>{appliedPromo}</strong> ({discountPercent}% discount activated across entire cart & checkout!)</span>
-              </div>
-            )}
-          </div>
-
           {/* Interactive CTA Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-1">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2 w-full sm:w-auto">
             {/* Primary Button: Dragonfruit with White text */}
             <button
               onClick={scrollToCollection}
-              className="inline-flex items-center gap-3 px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-dragonfruit text-white font-semibold text-xs sm:text-sm tracking-wider uppercase shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] hover:shadow-dragonfruit-lg transition-all duration-300 transform active:scale-95 cursor-pointer font-sans"
+              className="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-dragonfruit text-white font-semibold text-xs sm:text-sm tracking-wider uppercase shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] hover:shadow-dragonfruit-lg transition-all duration-300 transform active:scale-95 cursor-pointer font-sans"
             >
               <span>Explore Collection</span>
               <ArrowRight className="w-4 h-4" />
@@ -201,26 +137,61 @@ export const HeroSection = () => {
             {/* Bespoke Fitting studio secondary button */}
             <button
               onClick={() => openFittingModal()}
-              className="inline-flex items-center gap-2.5 px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-cardBg border border-cardBorder text-lightLavender font-medium text-xs sm:text-sm tracking-wider hover:border-dragonfruit hover:text-white hover:bg-cardBg/90 transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-cardBg border border-cardBorder text-lightLavender font-medium text-xs sm:text-sm tracking-wider hover:border-dragonfruit hover:text-white hover:bg-cardBg/90 transition-all duration-300 cursor-pointer"
             >
               <Scissors className="w-4 h-4 text-dragonfruit" />
               <span>Book Private Fitting</span>
             </button>
           </div>
 
+          {/* VIP Patron Coupon Code Capsule */}
+          <div className="inline-flex flex-wrap items-center gap-2 sm:gap-3 p-2 pr-3.5 rounded-2xl bg-cardBg/90 border border-cardBorder hover:border-dragonfruit/60 transition-all shadow-card-glow max-w-lg w-full">
+            <div className="px-2.5 py-1 rounded-xl bg-dragonfruit/20 border border-dragonfruit/60 flex items-center gap-1.5 text-dragonfruit text-[11px] font-bold shrink-0">
+              <Crown className="w-3.5 h-3.5" />
+              <span>VIP PRIVILEGE</span>
+            </div>
+            <div className="text-xs text-lightLavender font-medium flex items-center gap-1.5 flex-1 min-w-[140px]">
+              <span className="text-mutedLavender">Code:</span>
+              <strong className="text-dragonfruit font-mono font-bold tracking-wider px-2 py-0.5 rounded bg-inputBg border border-inputBorder text-xs">
+                {commerceConfig.promoCode}
+              </strong>
+              <span className="text-[11px] text-mutedLavender">({commerceConfig.promoDiscountPercent}% OFF)</span>
+            </div>
+            <button
+              onClick={handleCopyAndApply}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shrink-0 ${
+                appliedPromo === commerceConfig.promoCode || copied
+                  ? 'bg-[#35D07F] text-[#120824] shadow-[0_0_12px_rgba(53,208,127,0.6)] scale-105'
+                  : 'bg-dragonfruit text-white hover:bg-[#FF4696] hover:text-[#1E1033] shadow-dragonfruit'
+              }`}
+            >
+              {appliedPromo === commerceConfig.promoCode || copied ? (
+                <>
+                  <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  <span>Applied ✓</span>
+                </>
+              ) : (
+                <>
+                  <Tag className="w-3.5 h-3.5" />
+                  <span>Apply 25% Off</span>
+                </>
+              )}
+            </button>
+          </div>
+
           {/* Luxury Quality Badges */}
-          <div className="grid grid-cols-3 gap-4 pt-5 border-t border-cardBorder/60 w-full max-w-lg">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-4 sm:pt-5 border-t border-cardBorder/60 w-full max-w-lg text-center sm:text-left">
             <div className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-fashion font-bold text-mainHeading">4.9 ★</span>
-              <span className="text-xs text-mutedLavender mt-0.5 font-medium">Bespoke Rating</span>
+              <span className="text-lg sm:text-2xl font-fashion font-bold text-mainHeading">4.9 ★</span>
+              <span className="text-[10px] sm:text-xs text-mutedLavender mt-0.5 font-medium">Bespoke Rating</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-fashion font-bold text-mainHeading">100%</span>
-              <span className="text-xs text-mutedLavender mt-0.5 font-medium">Mulberry & Velvet</span>
+              <span className="text-lg sm:text-2xl font-fashion font-bold text-mainHeading">100%</span>
+              <span className="text-[10px] sm:text-xs text-mutedLavender mt-0.5 font-medium">Mulberry & Velvet</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-fashion font-bold text-mainHeading">7 SALONS</span>
-              <span className="text-xs text-mutedLavender mt-0.5 font-medium">Paris • London • Mumbai</span>
+              <span className="text-lg sm:text-2xl font-fashion font-bold text-mainHeading">7 SALONS</span>
+              <span className="text-[10px] sm:text-xs text-mutedLavender mt-0.5 font-medium">Paris • London</span>
             </div>
           </div>
         </div>

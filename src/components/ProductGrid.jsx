@@ -78,15 +78,15 @@ export const ProductGrid = () => {
           </p>
         </div>
 
-        {/* Collection Category Filter Tabs */}
-        <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap mb-8">
+        {/* Collection Category Filter Tabs (Horizontally scrollable on mobile, centered on tablet/desktop) */}
+        <div className="flex items-center gap-2 md:gap-3 overflow-x-auto no-scrollbar py-1 px-1 justify-start sm:justify-center mb-8">
           {CATEGORIES.map((cat) => {
             const isActive = selectedCategory === cat.id;
             return (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 cursor-pointer ${
+                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 cursor-pointer shrink-0 ${
                   isActive
                     ? 'bg-dragonfruit text-white shadow-dragonfruit shadow-[0_0_15px_rgba(255,42,141,0.5)] scale-105'
                     : 'bg-cardBg border border-cardBorder text-lightLavender hover:bg-[#FF4696] hover:text-[#1E1033] hover:border-[#FF4696]'
@@ -99,10 +99,10 @@ export const ProductGrid = () => {
         </div>
 
         {/* Search & Filter Bar with User Specified Inputs */}
-        <div className="p-4 rounded-2xl bg-cardBg border border-cardBorder shadow-xl mb-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="p-3 sm:p-4 rounded-2xl bg-cardBg border border-cardBorder shadow-xl mb-8 sm:mb-10">
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4">
             
-            {/* Search Input: Styled with inputBg #25143B and inputBorder #49325F */}
+            {/* Search Input */}
             <div className="relative w-full lg:w-96">
               <Search className="w-4 h-4 text-mutedLavender absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
@@ -110,7 +110,7 @@ export const ProductGrid = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search velvet, silk saree, gowns..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-inputBg border border-inputBorder text-mainHeading placeholder:text-mutedLavender/60 text-sm focus:outline-none focus:border-dragonfruit focus:ring-1 focus:ring-dragonfruit transition-all"
+                className="w-full pl-10 pr-12 py-2 sm:py-2.5 rounded-xl bg-inputBg border border-inputBorder text-mainHeading placeholder:text-mutedLavender/60 text-xs sm:text-sm focus:outline-none focus:border-dragonfruit focus:ring-1 focus:ring-dragonfruit transition-all"
               />
               {searchQuery && (
                 <button
@@ -123,13 +123,13 @@ export const ProductGrid = () => {
             </div>
 
             {/* Sub-Filters: Fabric, Occasion & Sort */}
-            <div className="flex items-center gap-3 w-full lg:w-auto flex-wrap justify-end">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-3 w-full lg:w-auto">
               
               {/* Fabric Select */}
               <select
                 value={selectedFabric}
                 onChange={(e) => setSelectedFabric(e.target.value)}
-                className="px-3.5 py-2.5 rounded-xl bg-inputBg border border-inputBorder text-lightLavender text-xs focus:outline-none focus:border-dragonfruit cursor-pointer"
+                className="w-full sm:w-auto px-3 py-2 rounded-xl bg-inputBg border border-inputBorder text-lightLavender text-xs focus:outline-none focus:border-dragonfruit cursor-pointer truncate"
               >
                 {FABRICS.map((fabric) => (
                   <option key={fabric} value={fabric} className="bg-cardBg text-lightLavender">
@@ -142,7 +142,7 @@ export const ProductGrid = () => {
               <select
                 value={selectedOccasion}
                 onChange={(e) => setSelectedOccasion(e.target.value)}
-                className="px-3.5 py-2.5 rounded-xl bg-inputBg border border-inputBorder text-lightLavender text-xs focus:outline-none focus:border-dragonfruit cursor-pointer"
+                className="w-full sm:w-auto px-3 py-2 rounded-xl bg-inputBg border border-inputBorder text-lightLavender text-xs focus:outline-none focus:border-dragonfruit cursor-pointer truncate"
               >
                 {OCCASIONS.map((occ) => (
                   <option key={occ} value={occ} className="bg-cardBg text-lightLavender">
@@ -155,7 +155,7 @@ export const ProductGrid = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3.5 py-2.5 rounded-xl bg-inputBg border border-inputBorder text-lightLavender text-xs focus:outline-none focus:border-dragonfruit cursor-pointer"
+                className="col-span-2 sm:col-span-1 w-full sm:w-auto px-3 py-2 rounded-xl bg-inputBg border border-inputBorder text-lightLavender text-xs focus:outline-none focus:border-dragonfruit cursor-pointer truncate"
               >
                 <option value="featured" className="bg-cardBg">Sort: Featured</option>
                 <option value="price-low" className="bg-cardBg">Price: Low to High</option>
@@ -167,7 +167,7 @@ export const ProductGrid = () => {
               {hasActiveFilters && (
                 <button
                   onClick={resetFilters}
-                  className="px-3.5 py-2.5 rounded-xl bg-cardBg border border-cardBorder text-xs text-mutedLavender hover:text-white hover:border-dragonfruit flex items-center gap-1.5 transition-all cursor-pointer"
+                  className="col-span-2 sm:col-span-1 px-3 py-2 rounded-xl bg-cardBg border border-cardBorder text-xs text-mutedLavender hover:text-white hover:border-dragonfruit flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                   title="Reset all filters"
                 >
                   <RotateCcw className="w-3.5 h-3.5 text-dragonfruit" />
@@ -179,7 +179,7 @@ export const ProductGrid = () => {
           </div>
 
           {/* Results Summary count */}
-          <div className="mt-3 pt-3 border-t border-cardBorder/40 flex items-center justify-between text-xs text-mutedLavender">
+          <div className="mt-3 pt-3 border-t border-cardBorder/40 flex items-center justify-between text-[11px] sm:text-xs text-mutedLavender">
             <span>
               Showing <strong className="text-mainHeading">{filteredProducts.length}</strong> master creations
             </span>
@@ -191,7 +191,7 @@ export const ProductGrid = () => {
 
         {/* Product Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
