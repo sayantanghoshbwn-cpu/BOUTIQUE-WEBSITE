@@ -48,7 +48,7 @@ export const VIPStylistButton = () => {
           title="Connect with VIP Stylist"
         >
           <div className="relative">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-dragonfruit flex items-center justify-center text-white shadow-[0_0_12px_#FF2A8D]">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-dragonfruit flex items-center justify-center text-white shadow-sm">
               <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
             <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#35D07F] rounded-full border-2 border-darkViolet" />

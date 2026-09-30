@@ -38,8 +38,8 @@ export default {
         fashion: ['"Cinzel"', 'serif'],
       },
       boxShadow: {
-        'dragonfruit': '0 0 25px -3px rgba(255, 42, 141, 0.45)',
-        'dragonfruit-lg': '0 0 40px -5px rgba(255, 42, 141, 0.55)',
+        'dragonfruit': '0 4px 14px -2px rgba(255, 42, 141, 0.22)',
+        'dragonfruit-lg': '0 6px 20px -3px rgba(255, 42, 141, 0.28)',
         'card-glow': '0 10px 30px -10px rgba(18, 8, 36, 0.8), 0 0 20px -5px rgba(58, 37, 85, 0.5)',
       },
       animation: {

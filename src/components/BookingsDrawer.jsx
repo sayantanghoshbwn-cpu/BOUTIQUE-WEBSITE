@@ -35,13 +35,13 @@ export const BookingsDrawer = () => {
         className="fixed inset-0 bg-nightViolet/80 backdrop-blur-sm transition-opacity"
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-cardBg border-l border-cardBorder shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-300">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
+        <div className="w-full sm:max-w-md bg-cardBg border-l border-cardBorder shadow-2xl flex flex-col z-10">
           
           {/* Header */}
           <div className="p-5 sm:p-6 border-b border-cardBorder flex items-center justify-between bg-inputBg/40">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-dragonfruit/20 border border-dragonfruit/80 flex items-center justify-center text-dragonfruit shadow-[0_0_10px_rgba(255,42,141,0.4)]">
+              <div className="w-8 h-8 rounded-full bg-dragonfruit/20 border border-dragonfruit/60 flex items-center justify-center text-dragonfruit shadow-sm">
                 <Calendar className="w-4 h-4" />
               </div>
               <div>
@@ -96,7 +96,7 @@ export const BookingsDrawer = () => {
                   {/* Status & Code */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#35D07F] shadow-[0_0_8px_#35D07F] animate-pulse" />
+                      <span className="w-2 h-2 rounded-full bg-[#35D07F] shadow-sm animate-pulse" />
                       <span className="text-[11px] font-bold text-[#35D07F] uppercase tracking-wider">
                         {booking.status || 'Confirmed VIP'}
                       </span>

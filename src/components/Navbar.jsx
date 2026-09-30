@@ -222,34 +222,25 @@ export const Navbar = () => {
             {/* ========================================================================= */}
             <div className="lg:hidden flex items-center justify-between w-full">
               
-              {/* Mobile Left: Menu Toggle + Search Button */}
-              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+              {/* Mobile Left: Menu Toggle */}
+              <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="w-8 h-8 rounded-full bg-dragonfruit/20 border border-dragonfruit/70 text-dragonfruit hover:bg-dragonfruit hover:text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                  className="w-8 h-8 rounded-full bg-inputBg/80 border border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
                   aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 >
                   {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-                </button>
-
-                <button
-                  onClick={() => setIsSearchOpen(true)}
-                  className="w-8 h-8 rounded-full bg-inputBg/80 border border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-95"
-                  title="Search Collection"
-                  aria-label="Search"
-                >
-                  <Search className="w-3.5 h-3.5" />
                 </button>
               </div>
 
               {/* Mobile Center (Majhkhane): Brand Logo & Title */}
               <button
                 onClick={scrollToTop}
-                className="flex flex-col items-center justify-center text-center px-1.5 py-0.5 group cursor-pointer transition-transform active:scale-95 max-w-[190px] sm:max-w-none"
+                className="flex flex-col items-center justify-center text-center px-1.5 py-0.5 group cursor-pointer transition-transform active:scale-95 max-w-[210px]"
                 title="Return to Home"
               >
                 <div className="flex items-center gap-1.5">
-                  <div className="w-5 h-5 rounded-full bg-dragonfruit/20 border border-dragonfruit/80 flex items-center justify-center shrink-0 shadow-[0_0_8px_rgba(255,42,141,0.5)] group-hover:scale-105 transition-transform">
+                  <div className="w-5 h-5 rounded-full bg-dragonfruit/20 border border-dragonfruit/60 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
                     <Sparkles className="w-2.5 h-2.5 text-dragonfruit animate-pulse" />
                   </div>
                   <span className="font-fashion text-xs sm:text-sm font-bold tracking-[0.14em] sm:tracking-[0.16em] text-mainHeading group-hover:text-dragonfruit transition-colors duration-300 leading-tight">
@@ -261,34 +252,15 @@ export const Navbar = () => {
                 </span>
               </button>
 
-              {/* Mobile Right: Wishlist + Shopping Bag */}
-              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+              {/* Mobile Right: Search Trigger */}
+              <div className="flex items-center gap-1.5 shrink-0">
                 <button
-                  onClick={() => setIsWishlistOpen(true)}
-                  className="w-8 h-8 rounded-full bg-inputBg/80 border border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit flex items-center justify-center transition-all relative cursor-pointer shadow-sm active:scale-95"
-                  title="View Wishlist"
-                  aria-label="Wishlist"
+                  onClick={() => setIsSearchOpen(true)}
+                  className="w-8 h-8 rounded-full bg-inputBg/80 border border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-95"
+                  title="Search Collection"
+                  aria-label="Search"
                 >
-                  <Heart className="w-3.5 h-3.5" />
-                  {wishlistCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-dragonfruit text-white text-[8.5px] font-bold flex items-center justify-center shadow-[0_0_6px_#FF2A8D] animate-bounce">
-                      {wishlistCount}
-                    </span>
-                  )}
-                </button>
-
-                <button
-                  onClick={() => setIsCartOpen(true)}
-                  className="w-8 h-8 rounded-full bg-inputBg/80 border border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit flex items-center justify-center transition-all relative cursor-pointer shadow-sm active:scale-95"
-                  title="View Shopping Bag"
-                  aria-label="Shopping Bag"
-                >
-                  <ShoppingBag className="w-3.5 h-3.5" />
-                  {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-dragonfruit text-white text-[8.5px] font-bold flex items-center justify-center shadow-[0_0_6px_#FF2A8D]">
-                      {cartCount}
-                    </span>
-                  )}
+                  <Search className="w-3.5 h-3.5" />
                 </button>
               </div>
 
@@ -305,7 +277,7 @@ export const Navbar = () => {
                 className="flex items-center gap-2 pl-1.5 pr-3 py-1 rounded-full bg-[#25143B]/80 hover:bg-[#281640] border border-[#3A2555]/70 hover:border-dragonfruit/60 transition-all duration-300 group cursor-pointer shrink-0 shadow-inner"
                 title="Return to Home"
               >
-                <div className="w-6 h-6 rounded-full bg-dragonfruit/20 border border-dragonfruit/80 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(255,42,141,0.5)] group-hover:scale-105 transition-transform">
+                <div className="w-6 h-6 rounded-full bg-dragonfruit/20 border border-dragonfruit/60 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
                   <Sparkles className="w-3 h-3 text-dragonfruit animate-pulse" />
                 </div>
                 <div className="flex flex-col text-left truncate">
@@ -326,7 +298,7 @@ export const Navbar = () => {
                   onClick={scrollToTop}
                   className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
                     activeNavSection === 'home'
-                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-[0_0_10px_rgba(255,42,141,0.25)]'
+                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-sm'
                       : 'text-lightLavender hover:text-white hover:bg-dragonfruit/10'
                   }`}
                 >
@@ -340,7 +312,7 @@ export const Navbar = () => {
                     onMouseEnter={() => setIsCollectionsDropdownOpen(true)}
                     className={`px-2.5 py-1 rounded-full transition-all flex items-center gap-1 cursor-pointer ${
                       activeNavSection === 'collection' || isCollectionsDropdownOpen
-                        ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-[0_0_10px_rgba(255,42,141,0.25)]'
+                        ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-sm'
                         : 'text-lightLavender hover:text-white hover:bg-dragonfruit/10'
                     }`}
                   >
@@ -352,7 +324,7 @@ export const Navbar = () => {
                   {isCollectionsDropdownOpen && (
                     <div
                       onMouseLeave={() => setIsCollectionsDropdownOpen(false)}
-                      className="absolute top-full left-0 mt-2 w-64 rounded-2xl bg-[#1c0d33]/98 backdrop-blur-3xl border border-cardBorder shadow-[0_15px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(255,42,141,0.25)] p-2 z-50 animate-in fade-in zoom-in-95 duration-200"
+                      className="absolute top-full left-0 mt-2 w-64 rounded-2xl bg-[#1c0d33]/98 backdrop-blur-3xl border border-cardBorder shadow-[0_15px_40px_rgba(0,0,0,0.8)] p-2 z-50 animate-in fade-in zoom-in-95 duration-200"
                     >
                       <div className="px-2.5 py-1.5 text-[9.5px] font-bold tracking-[0.2em] uppercase text-dragonfruit border-b border-cardBorder/60 mb-1">
                         Haute Couture Archives
@@ -386,7 +358,7 @@ export const Navbar = () => {
                   onClick={() => scrollToSection('bespoke-studio', 'custom-tailoring')}
                   className={`px-2.5 py-1 rounded-full transition-all flex items-center gap-1 cursor-pointer ${
                     activeNavSection === 'custom-tailoring'
-                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-[0_0_10px_rgba(255,42,141,0.25)]'
+                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-sm'
                       : 'text-lightLavender hover:text-white hover:bg-dragonfruit/10'
                   }`}
                 >
@@ -400,7 +372,7 @@ export const Navbar = () => {
                   onClick={() => scrollToSection('lookbook', 'lookbook')}
                   className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
                     activeNavSection === 'lookbook'
-                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-[0_0_10px_rgba(255,42,141,0.25)]'
+                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-sm'
                       : 'text-lightLavender hover:text-white hover:bg-dragonfruit/10'
                   }`}
                 >
@@ -412,7 +384,7 @@ export const Navbar = () => {
                   onClick={() => scrollToSection('atelier-story', 'our-story')}
                   className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
                     activeNavSection === 'our-story'
-                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-[0_0_10px_rgba(255,42,141,0.25)]'
+                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-sm'
                       : 'text-lightLavender hover:text-white hover:bg-dragonfruit/10'
                   }`}
                 >
@@ -425,7 +397,7 @@ export const Navbar = () => {
                   onClick={() => scrollToSection('testimonials', 'reviews')}
                   className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
                     activeNavSection === 'reviews'
-                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-[0_0_10px_rgba(255,42,141,0.25)]'
+                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-sm'
                       : 'text-lightLavender hover:text-white hover:bg-dragonfruit/10'
                   }`}
                 >
@@ -437,7 +409,7 @@ export const Navbar = () => {
                   onClick={() => scrollToSection('salons', 'contact')}
                   className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
                     activeNavSection === 'contact'
-                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-[0_0_10px_rgba(255,42,141,0.25)]'
+                      ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-sm'
                       : 'text-lightLavender hover:text-white hover:bg-dragonfruit/10'
                   }`}
                 >
@@ -497,14 +469,14 @@ export const Navbar = () => {
                   onClick={() => openBookingsDrawer()}
                   className={`hidden md:flex w-7 h-7 sm:w-8 sm:h-8 rounded-full border items-center justify-center transition-all relative cursor-pointer shadow-sm hover:scale-105 active:scale-95 shrink-0 ${
                     bookingsCount > 0
-                      ? 'bg-dragonfruit/20 border-dragonfruit text-dragonfruit shadow-[0_0_12px_rgba(255,42,141,0.4)]'
+                      ? 'bg-dragonfruit/20 border-dragonfruit text-dragonfruit shadow-sm'
                       : 'bg-inputBg/80 border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit'
                   }`}
                   title={bookingsCount > 0 ? `${bookingsCount} VIP Appointment(s) Confirmed` : 'View Appointments'}
                 >
                   <Calendar className="w-3.5 h-3.5" />
                   {bookingsCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-dragonfruit text-white text-[9px] font-bold flex items-center justify-center shadow-[0_0_8px_#FF2A8D] animate-pulse">
+                    <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-dragonfruit text-white text-[9px] font-bold flex items-center justify-center shadow-sm animate-pulse">
                       {bookingsCount}
                     </span>
                   )}
@@ -519,7 +491,7 @@ export const Navbar = () => {
                 >
                   <Heart className="w-3.5 h-3.5" />
                   {wishlistCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-dragonfruit text-white text-[8.5px] sm:text-[9px] font-bold flex items-center justify-center shadow-[0_0_8px_#FF2A8D] animate-bounce">
+                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-dragonfruit text-white text-[8.5px] sm:text-[9px] font-bold flex items-center justify-center shadow-sm animate-bounce">
                       {wishlistCount}
                     </span>
                   )}
@@ -534,7 +506,7 @@ export const Navbar = () => {
                 >
                   <ShoppingBag className="w-3.5 h-3.5" />
                   {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-dragonfruit text-white text-[8.5px] sm:text-[9px] font-bold flex items-center justify-center shadow-[0_0_8px_#FF2A8D]">
+                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-dragonfruit text-white text-[8.5px] sm:text-[9px] font-bold flex items-center justify-center shadow-sm">
                       {cartCount}
                     </span>
                   )}
@@ -549,7 +521,7 @@ export const Navbar = () => {
                   <Calendar className="w-3 h-3" />
                   <span>{bookingsCount > 0 ? `Fitting (${bookingsCount})` : 'Book Fitting'}</span>
                   {bookingsCount > 0 && (
-                    <span className="w-2 h-2 rounded-full bg-[#35D07F] shadow-[0_0_6px_#35D07F] animate-ping" />
+                    <span className="w-2 h-2 rounded-full bg-[#35D07F] shadow-sm animate-ping" />
                   )}
                 </button>
 
@@ -572,19 +544,19 @@ export const Navbar = () => {
           />
 
           {/* Drawer Content Panel */}
-          <div className="relative w-full max-w-sm sm:max-w-md bg-[#160a28]/98 backdrop-blur-3xl border-l border-cardBorder h-[100dvh] flex flex-col justify-between shadow-[-10px_0_40px_rgba(0,0,0,0.8)] z-10 animate-in slide-in-from-right duration-300 overflow-hidden">
+          <div className="relative w-full sm:max-w-sm md:max-w-md bg-[#160a28]/98 backdrop-blur-3xl border-l border-cardBorder h-[100dvh] flex flex-col justify-between shadow-2xl z-10 overflow-hidden">
             
             {/* 1. Drawer Header */}
-            <div className="p-4 sm:p-5 border-b border-cardBorder/70 flex items-center justify-between shrink-0 bg-[#1e0e37]/70">
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-full bg-dragonfruit/20 border border-dragonfruit flex items-center justify-center shadow-[0_0_10px_rgba(255,42,141,0.5)]">
+            <div className="px-4 py-3.5 sm:px-5 sm:py-4 border-b border-cardBorder/70 flex items-center justify-between shrink-0 bg-[#1e0e37]/70">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-7 h-7 rounded-full bg-dragonfruit/20 border border-dragonfruit/60 flex items-center justify-center shrink-0 shadow-sm">
                   <Sparkles className="w-3.5 h-3.5 text-dragonfruit animate-pulse" />
                 </div>
-                <div>
-                  <h3 className="font-fashion text-sm sm:text-base font-bold tracking-widest text-mainHeading uppercase leading-tight">
+                <div className="min-w-0">
+                  <h3 className="font-fashion text-sm sm:text-base font-bold tracking-widest text-mainHeading uppercase leading-tight truncate">
                     {brandConfig.name}
                   </h3>
-                  <span className="text-[8px] tracking-[0.22em] text-mutedLavender uppercase font-sans">
+                  <span className="text-[7.5px] sm:text-[8px] tracking-[0.2em] text-mutedLavender uppercase font-sans block truncate">
                     Haute Couture Atelier
                   </span>
                 </div>
@@ -592,7 +564,7 @@ export const Navbar = () => {
 
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-8 h-8 rounded-full bg-inputBg border border-inputBorder text-mutedLavender hover:text-white hover:border-dragonfruit flex items-center justify-center transition-colors cursor-pointer"
+                className="w-8 h-8 rounded-full bg-inputBg border border-inputBorder text-mutedLavender hover:text-white hover:border-dragonfruit flex items-center justify-center transition-colors cursor-pointer shrink-0 ml-2"
                 aria-label="Close menu"
               >
                 <X className="w-4 h-4" />
@@ -603,12 +575,14 @@ export const Navbar = () => {
             <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5 space-y-4 no-scrollbar">
               
               {/* VIP Promo Banner Inside Drawer */}
-              <div className="p-3 rounded-2xl bg-cardBg border border-dragonfruit/50 flex items-center justify-between gap-2 shadow-[0_0_15px_rgba(255,42,141,0.2)]">
-                <div className="flex items-center gap-2">
+              <div className="p-3 rounded-2xl bg-cardBg border border-cardBorder flex items-center justify-between gap-2 shadow-md">
+                <div className="flex items-center gap-2 min-w-0">
                   <Crown className="w-4 h-4 text-dragonfruit shrink-0" />
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-dragonfruit tracking-wider block">Privilege Code</span>
-                    <span className="font-mono font-bold text-xs text-white">{commerceConfig.promoCode} ({commerceConfig.promoDiscountPercent}% OFF)</span>
+                  <div className="min-w-0">
+                    <span className="text-[9.5px] uppercase font-bold text-dragonfruit tracking-wider block">Privilege Code</span>
+                    <span className="font-mono font-bold text-[11px] sm:text-xs text-white truncate block">
+                      {commerceConfig.promoCode} ({commerceConfig.promoDiscountPercent}% OFF)
+                    </span>
                   </div>
                 </div>
                 <button
@@ -622,15 +596,15 @@ export const Navbar = () => {
               {/* Currency Selector & Confirmed Bookings Pill Row */}
               <div className="grid grid-cols-2 gap-2">
                 {/* Currency Switcher */}
-                <div className="p-2 rounded-xl bg-inputBg/80 border border-inputBorder flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs text-mutedLavender">
+                <div className="p-2 sm:p-2.5 rounded-xl bg-inputBg/80 border border-inputBorder flex items-center justify-between min-w-0">
+                  <div className="flex items-center gap-1 text-[11px] text-mutedLavender shrink-0">
                     <Globe className="w-3.5 h-3.5 text-dragonfruit" />
                     <span className="font-semibold text-lightLavender">{currency}</span>
                   </div>
                   <select
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
-                    className="bg-transparent text-lightLavender text-xs font-semibold focus:outline-none cursor-pointer text-right"
+                    className="bg-transparent text-lightLavender text-[11px] font-semibold focus:outline-none cursor-pointer text-right min-w-0 max-w-[65px]"
                   >
                     {Object.keys(CURRENCIES).map((c) => (
                       <option key={c} value={c} className="bg-cardBg text-lightLavender">
@@ -647,19 +621,19 @@ export const Navbar = () => {
                     if (bookingsCount > 0) openBookingsDrawer();
                     else openFittingModal();
                   }}
-                  className={`p-2 rounded-xl border flex items-center justify-between text-xs cursor-pointer transition-all ${
+                  className={`p-2 sm:p-2.5 rounded-xl border flex items-center justify-between text-[11px] cursor-pointer transition-all min-w-0 ${
                     bookingsCount > 0
-                      ? 'bg-dragonfruit/20 border-dragonfruit text-dragonfruit shadow-[0_0_10px_rgba(255,42,141,0.3)]'
+                      ? 'bg-dragonfruit/20 border-dragonfruit text-dragonfruit shadow-sm'
                       : 'bg-inputBg/80 border-inputBorder text-mutedLavender hover:text-white hover:border-dragonfruit'
                   }`}
                 >
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5" />
+                  <div className="flex items-center gap-1.5 min-w-0 truncate">
+                    <Calendar className="w-3.5 h-3.5 shrink-0" />
                     <span className="font-semibold truncate">
                       {bookingsCount > 0 ? `Bookings (${bookingsCount})` : 'Book Fitting'}
                     </span>
                   </div>
-                  <ArrowRight className="w-3 h-3 shrink-0" />
+                  <ArrowRight className="w-3 h-3 shrink-0 ml-1 opacity-60" />
                 </button>
               </div>
 
@@ -820,7 +794,7 @@ export const Navbar = () => {
             </div>
 
             {/* 3. Drawer Bottom Action Buttons & Concierge */}
-            <div className="p-4 sm:p-5 border-t border-cardBorder/70 bg-[#190c2e] space-y-2.5 shrink-0">
+            <div className="p-4 sm:p-5 border-t border-cardBorder/70 bg-[#190c2e] space-y-2 shrink-0">
               
               {/* Primary Video Fitting CTA */}
               <button
@@ -828,7 +802,7 @@ export const Navbar = () => {
                   setIsMobileMenuOpen(false);
                   openFittingModal();
                 }}
-                className="w-full py-3 rounded-xl bg-dragonfruit text-white font-bold text-xs uppercase tracking-wider shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
+                className="w-full py-2.5 sm:py-3 rounded-xl bg-dragonfruit text-white font-bold text-xs uppercase tracking-wider shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Book Private Video Fitting</span>
@@ -840,22 +814,22 @@ export const Navbar = () => {
                   setIsMobileMenuOpen(false);
                   setIsCartOpen(true);
                 }}
-                className="w-full py-2.5 rounded-xl bg-cardBg border border-cardBorder text-lightLavender hover:border-dragonfruit hover:text-white text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all"
+                className="w-full py-2 sm:py-2.5 rounded-xl bg-cardBg border border-cardBorder text-lightLavender hover:border-dragonfruit hover:text-white text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all"
               >
                 <ShoppingBag className="w-4 h-4 text-dragonfruit" />
                 <span>View Shopping Bag ({cartCount})</span>
               </button>
 
               {/* Concierge Desk */}
-              <div className="pt-2 text-[10.5px] text-mutedLavender flex items-center justify-between px-1">
+              <div className="pt-1.5 text-[10px] sm:text-[10.5px] text-mutedLavender flex items-center justify-between gap-1">
                 <a
                   href={`tel:${contactConfig.phone}`}
-                  className="flex items-center gap-1 hover:text-dragonfruit transition-colors"
+                  className="flex items-center gap-1 hover:text-dragonfruit transition-colors truncate"
                 >
-                  <Phone className="w-3 h-3 text-dragonfruit" />
-                  <span>VIP Desk: {contactConfig.phone}</span>
+                  <Phone className="w-3 h-3 text-dragonfruit shrink-0" />
+                  <span className="truncate">VIP: {contactConfig.phone}</span>
                 </a>
-                <span className="text-dragonfruit font-medium">Paris • London</span>
+                <span className="text-dragonfruit font-medium shrink-0">Paris • London</span>
               </div>
 
             </div>
@@ -866,7 +840,7 @@ export const Navbar = () => {
 
       {/* MOBILE FLOATING BOTTOM NAVIGATION DOCK (Thumb-zone luxury navigation) */}
       <nav
-        className="lg:hidden fixed bottom-3 inset-x-3 sm:inset-x-6 z-40 max-w-md mx-auto rounded-full bg-[#180b2c]/95 backdrop-blur-2xl border border-dragonfruit/40 shadow-[0_10px_35px_rgba(0,0,0,0.85),0_0_20px_rgba(255,42,141,0.25)] px-3 py-1.5 flex items-center justify-around transition-all"
+        className="lg:hidden fixed bottom-3 inset-x-3 sm:inset-x-6 z-40 max-w-md mx-auto rounded-full bg-[#180b2c]/95 backdrop-blur-2xl border border-cardBorder/80 shadow-[0_12px_35px_rgba(0,0,0,0.85)] px-3 py-1.5 flex items-center justify-around transition-all"
         aria-label="Mobile Navigation"
       >
         {/* 1. Home */}
@@ -882,7 +856,7 @@ export const Navbar = () => {
           <Home className="w-4 h-4" />
           <span className="text-[9px] font-semibold mt-0.5">Home</span>
           {activeNavSection === 'home' && (
-            <span className="w-1 h-1 rounded-full bg-dragonfruit shadow-[0_0_6px_#FF2A8D] absolute -bottom-0.5" />
+            <span className="w-1 h-1 rounded-full bg-dragonfruit absolute -bottom-0.5" />
           )}
         </button>
 
@@ -902,7 +876,7 @@ export const Navbar = () => {
           <Grid className="w-4 h-4" />
           <span className="text-[9px] font-semibold mt-0.5">Catalog</span>
           {activeNavSection === 'collection' && (
-            <span className="w-1 h-1 rounded-full bg-dragonfruit shadow-[0_0_6px_#FF2A8D] absolute -bottom-0.5" />
+            <span className="w-1 h-1 rounded-full bg-dragonfruit absolute -bottom-0.5" />
           )}
         </button>
 
@@ -915,7 +889,7 @@ export const Navbar = () => {
           className="flex flex-col items-center justify-center -mt-3 group cursor-pointer"
           title="Custom Tailoring Studio"
         >
-          <div className="w-11 h-11 rounded-full bg-dragonfruit text-white flex items-center justify-center shadow-[0_0_18px_rgba(255,42,141,0.7)] group-hover:scale-110 group-active:scale-95 transition-all border-2 border-[#180b2c]">
+          <div className="w-11 h-11 rounded-full bg-dragonfruit text-white flex items-center justify-center shadow-md shadow-dragonfruit/25 group-hover:scale-105 group-active:scale-95 transition-all border-2 border-[#180b2c]">
             <Scissors className="w-5 h-5" />
           </div>
           <span className="text-[9px] font-bold text-white mt-0.5">Bespoke</span>

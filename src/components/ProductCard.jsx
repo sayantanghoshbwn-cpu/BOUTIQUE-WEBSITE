@@ -111,12 +111,12 @@ export const ProductCard = ({ product }) => {
       </div>
 
       {/* Bottom Product Details */}
-      <div className="p-5 flex flex-col justify-between flex-1">
+      <div className="p-3.5 sm:p-5 flex flex-col justify-between flex-1">
         <div>
           {/* Category & Fabric metadata */}
           <div className="flex items-center justify-between text-xs text-mutedLavender mb-1.5">
-            <span className="uppercase tracking-widest font-medium text-[10px]">{product.category}</span>
-            <span className="text-lightLavender font-medium text-[11px] truncate max-w-[150px]">{product.fabric}</span>
+            <span className="uppercase tracking-widest font-medium text-[9.5px] sm:text-[10px]">{product.category}</span>
+            <span className="text-lightLavender font-medium text-[10px] sm:text-[11px] truncate max-w-[120px] sm:max-w-[150px]">{product.fabric}</span>
           </div>
 
           {/* Product Title */}
@@ -140,7 +140,7 @@ export const ProductCard = ({ product }) => {
                   }}
                   className={`w-4 h-4 rounded-full border transition-all cursor-pointer relative ${
                     selectedColor.name === color.name
-                      ? 'border-dragonfruit scale-125 shadow-[0_0_8px_#FF2A8D]'
+                      ? 'border-dragonfruit scale-125 shadow-sm'
                       : 'border-cardBorder opacity-70 hover:opacity-100'
                   }`}
                   style={{ backgroundColor: color.hex }}
@@ -175,27 +175,27 @@ export const ProductCard = ({ product }) => {
         </div>
 
         {/* Pricing & Add to Cart Footer */}
-        <div className="pt-3 border-t border-cardBorder/60 flex items-center justify-between">
-          <div className="flex flex-col">
-            <div className="flex items-baseline gap-2">
-              <span className="text-lg font-fashion font-bold text-mainHeading">
+        <div className="pt-2.5 sm:pt-3 border-t border-cardBorder/60 flex items-center justify-between gap-2">
+          <div className="flex flex-col min-w-0">
+            <div className="flex items-baseline gap-1.5 sm:gap-2 truncate">
+              <span className="text-base sm:text-lg font-fashion font-bold text-mainHeading">
                 {formatPrice(product.priceUSD)}
               </span>
               {product.originalPriceUSD > product.priceUSD && (
-                <span className="text-xs text-mutedLavender line-through">
+                <span className="text-[10px] sm:text-xs text-mutedLavender line-through">
                   {formatPrice(product.originalPriceUSD)}
                 </span>
               )}
             </div>
-            <span className="text-[10px] text-mutedLavender">{product.leadTime}</span>
+            <span className="text-[9px] sm:text-[10px] text-mutedLavender truncate">{product.leadTime}</span>
           </div>
 
           {/* Primary Action Button: Dragonfruit with White text, hover effect */}
           <button
             onClick={handleQuickAdd}
-            className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all duration-300 flex items-center gap-1.5 cursor-pointer font-sans ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-all duration-300 flex items-center gap-1 sm:gap-1.5 cursor-pointer font-sans shrink-0 ${
               justAdded
-                ? 'bg-[#35D07F] text-[#120824] font-bold shadow-[0_0_15px_rgba(53,208,127,0.6)] scale-105'
+                ? 'bg-[#35D07F] text-[#120824] font-bold shadow-md shadow-[#35D07F]/40 scale-105'
                 : 'bg-dragonfruit text-white shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] hover:shadow-dragonfruit-lg'
             }`}
           >
@@ -206,7 +206,7 @@ export const ProductCard = ({ product }) => {
               </>
             ) : (
               <>
-                <ShoppingBag className="w-3 h-3" />
+                <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 <span>Add</span>
               </>
             )}

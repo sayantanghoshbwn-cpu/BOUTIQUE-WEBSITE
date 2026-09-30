@@ -97,8 +97,8 @@ export const HeroSection = () => {
   return (
     <section id="hero" className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden bg-nightViolet pt-4 pb-12 lg:pb-16 scroll-mt-28">
       {/* Ambient background glows with dragonfruit & night-violet tones */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-dragonfruit/15 rounded-full blur-[140px] pointer-events-none animate-pulse-slow" />
-      <div className="absolute bottom-10 right-1/4 w-[450px] h-[450px] bg-[#3A2555]/40 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-60 sm:w-[450px] h-60 sm:h-[450px] bg-dragonfruit/5 sm:bg-dragonfruit/8 rounded-full blur-[90px] sm:blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-[450px] h-[450px] bg-[#3A2555]/30 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         
@@ -161,7 +161,7 @@ export const HeroSection = () => {
               onClick={handleCopyAndApply}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shrink-0 ${
                 appliedPromo === commerceConfig.promoCode || copied
-                  ? 'bg-[#35D07F] text-[#120824] shadow-[0_0_12px_rgba(53,208,127,0.6)] scale-105'
+                  ? 'bg-[#35D07F] text-[#120824] shadow-md shadow-[#35D07F]/40 scale-105'
                   : 'bg-dragonfruit text-white hover:bg-[#FF4696] hover:text-[#1E1033] shadow-dragonfruit'
               }`}
             >
@@ -240,7 +240,7 @@ export const HeroSection = () => {
                 onClick={() => setActiveSlide(idx)}
                 className={`transition-all duration-300 rounded-full cursor-pointer ${
                   activeSlide === idx
-                    ? 'w-8 h-2.5 bg-dragonfruit shadow-[0_0_10px_#FF2A8D]'
+                    ? 'w-8 h-2.5 bg-dragonfruit shadow-sm'
                     : 'w-2.5 h-2.5 bg-cardBorder hover:bg-mutedLavender'
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}

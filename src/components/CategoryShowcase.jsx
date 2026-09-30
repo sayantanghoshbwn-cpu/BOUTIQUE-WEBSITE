@@ -89,7 +89,7 @@ export const CategoryShowcase = () => {
                 </div>
 
                 {/* Bottom Overlay Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end">
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 flex flex-col justify-end">
                   <span className="text-xs text-dragonfruit font-semibold tracking-wider uppercase mb-1">
                     {cat.count}
                   </span>

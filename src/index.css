@@ -46,7 +46,7 @@
 
 @layer utilities {
   .text-glow {
-    text-shadow: 0 0 15px rgba(255, 42, 141, 0.45);
+    text-shadow: 0 0 6px rgba(255, 42, 141, 0.20);
   }
   .glass-card {
     background: rgba(40, 22, 64, 0.85);

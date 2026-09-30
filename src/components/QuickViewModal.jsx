@@ -103,7 +103,7 @@ export const QuickViewModal = () => {
                   onClick={() => setActiveImageIndex(idx)}
                   className={`w-16 h-20 rounded-xl overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
                     activeImageIndex === idx
-                      ? 'border-dragonfruit scale-105 shadow-[0_0_10px_#FF2A8D]'
+                      ? 'border-dragonfruit scale-105 shadow-sm'
                       : 'border-cardBorder opacity-60 hover:opacity-100'
                   }`}
                 >

@@ -88,7 +88,7 @@ export const ProductGrid = () => {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 cursor-pointer shrink-0 ${
                   isActive
-                    ? 'bg-dragonfruit text-white shadow-dragonfruit shadow-[0_0_15px_rgba(255,42,141,0.5)] scale-105'
+                    ? 'bg-dragonfruit text-white shadow-dragonfruit scale-105'
                     : 'bg-cardBg border border-cardBorder text-lightLavender hover:bg-[#FF4696] hover:text-[#1E1033] hover:border-[#FF4696]'
                 }`}
               >

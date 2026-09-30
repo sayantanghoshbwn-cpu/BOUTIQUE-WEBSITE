@@ -210,12 +210,12 @@ export const BespokeStudio = () => {
         </div>
 
         {/* Bespoke Studio Content Container */}
-        <div className="rounded-3xl bg-cardBg border border-cardBorder shadow-2xl p-6 lg:p-10">
+        <div className="rounded-2xl sm:rounded-3xl bg-cardBg border border-cardBorder shadow-2xl p-4 sm:p-6 lg:p-10">
           
           {!isBooked ? (
             <div>
               {/* Stepper Navigation */}
-              <div className="grid grid-cols-4 gap-2 mb-10 pb-6 border-b border-cardBorder">
+              <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mb-6 sm:mb-10 pb-4 sm:pb-6 border-b border-cardBorder">
                 {[
                   { num: 1, title: 'Silhouette', icon: Ruler },
                   { num: 2, title: 'Fabric & Color', icon: Palette },
@@ -229,20 +229,20 @@ export const BespokeStudio = () => {
                     <button
                       key={s.num}
                       onClick={() => setStep(s.num)}
-                      className={`flex flex-col items-center sm:flex-row sm:items-center justify-center gap-2 p-3 rounded-xl transition-all cursor-pointer ${
+                      className={`flex flex-col items-center sm:flex-row sm:items-center justify-center gap-1 sm:gap-2 p-2 sm:p-3 rounded-xl transition-all cursor-pointer ${
                         isActive
-                          ? 'bg-dragonfruit text-white shadow-dragonfruit font-bold'
+                          ? 'bg-dragonfruit text-white shadow-sm font-bold'
                           : isDone
                           ? 'bg-inputBg border border-cardBorder text-[#35D07F]'
                           : 'bg-inputBg/50 text-mutedLavender hover:text-lightLavender'
                       }`}
                     >
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                      <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold ${
                         isActive ? 'bg-white text-dragonfruit' : isDone ? 'bg-[#35D07F] text-nightViolet' : 'bg-cardBorder text-mutedLavender'
                       }`}>
                         {isDone ? '✓' : s.num}
                       </div>
-                      <span className="text-xs tracking-wider uppercase hidden sm:inline">{s.title}</span>
+                      <span className="text-[10px] sm:text-xs tracking-wider uppercase hidden sm:inline">{s.title}</span>
                     </button>
                   );
                 })}
@@ -271,7 +271,7 @@ export const BespokeStudio = () => {
                             onClick={() => setSilhouette(s.name)}
                             className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between ${
                               silhouette === s.name
-                                ? 'bg-inputBg border-dragonfruit shadow-dragonfruit ring-1 ring-dragonfruit'
+                                ? 'bg-inputBg border-dragonfruit shadow-sm'
                                 : 'bg-inputBg/60 border-cardBorder hover:border-mutedLavender'
                             }`}
                           >
@@ -324,7 +324,7 @@ export const BespokeStudio = () => {
                             onClick={() => setFabric(f.name)}
                             className={`p-4 rounded-xl border transition-all cursor-pointer ${
                               fabric === f.name
-                                ? 'bg-inputBg border-dragonfruit shadow-dragonfruit ring-1 ring-dragonfruit'
+                                ? 'bg-inputBg border-dragonfruit shadow-sm'
                                 : 'bg-inputBg/60 border-cardBorder hover:border-mutedLavender'
                             }`}
                           >
@@ -351,7 +351,7 @@ export const BespokeStudio = () => {
                               onClick={() => setColorTone(c.name)}
                               className={`flex items-center gap-2.5 px-4 py-2 rounded-xl border transition-all cursor-pointer ${
                                 colorTone === c.name
-                                  ? 'bg-inputBg border-dragonfruit shadow-dragonfruit text-white'
+                                  ? 'bg-inputBg border-dragonfruit shadow-sm text-white'
                                   : 'bg-inputBg/60 border-cardBorder text-mutedLavender hover:text-lightLavender'
                               }`}
                             >
@@ -399,7 +399,7 @@ export const BespokeStudio = () => {
                             onClick={() => setEmbellishment(emb.name)}
                             className={`p-5 rounded-2xl border transition-all cursor-pointer ${
                               embellishment === emb.name
-                                ? 'bg-inputBg border-dragonfruit shadow-dragonfruit ring-1 ring-dragonfruit'
+                                ? 'bg-inputBg border-dragonfruit shadow-sm'
                                 : 'bg-inputBg/60 border-cardBorder hover:border-mutedLavender'
                             }`}
                           >

@@ -34,9 +34,9 @@ export const NewsletterSection = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         
         <div className="relative rounded-3xl bg-cardBg border border-cardBorder p-8 md:p-14 text-center overflow-hidden shadow-2xl">
-          {/* Subtle dragonfruit glow in the background */}
-          <div className="absolute -top-24 -left-24 w-72 h-72 bg-dragonfruit/20 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-purple-900/30 rounded-full blur-[100px] pointer-events-none" />
+          {/* Subtle ambient tone in the background */}
+          <div className="absolute -top-24 -left-24 w-72 h-72 bg-dragonfruit/5 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-purple-900/20 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="relative z-10 max-w-2xl mx-auto space-y-6">
             

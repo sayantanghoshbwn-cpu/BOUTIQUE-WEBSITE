@@ -18,7 +18,7 @@ export const Footer = () => {
           {/* Brand & Mission (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-dragonfruit shadow-[0_0_10px_#FF2A8D]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-dragonfruit shadow-sm" />
               <span className="font-fashion text-2xl font-bold tracking-[0.25em] text-white">
                 {brandConfig.name}
               </span>

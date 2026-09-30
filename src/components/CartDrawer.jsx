@@ -99,7 +99,7 @@ export const CartDrawer = () => {
           </div>
           <div className="w-full h-1.5 rounded-full bg-inputBg overflow-hidden">
             <div
-              className="h-full bg-dragonfruit transition-all duration-500 rounded-full shadow-[0_0_8px_#FF2A8D]"
+              className="h-full bg-dragonfruit transition-all duration-500 rounded-full"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
