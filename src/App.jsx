@@ -56,7 +56,7 @@ function BoutiqueApp() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-nightViolet text-lightLavender font-sans selection:bg-dragonfruit selection:text-white relative">
+    <div className="min-h-screen bg-nightViolet text-lightLavender font-sans selection:bg-dragonfruit selection:text-white relative overflow-x-hidden">
       {/* Global Navigation Header */}
       <Navbar />
 

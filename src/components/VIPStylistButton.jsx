@@ -39,19 +39,19 @@ export const VIPStylistButton = () => {
   };
 
   return (
-    <div className="fixed bottom-20 sm:bottom-20 lg:bottom-6 left-3 sm:left-6 z-30">
+    <div className="fixed bottom-20 lg:bottom-6 right-3 sm:right-6 lg:left-6 lg:right-auto z-30">
       {/* Floating Trigger Button */}
       {!isOpen ? (
         <button
           onClick={() => setIsOpen(true)}
-          className="group flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-full bg-darkViolet/95 backdrop-blur-md border border-cardBorder text-lightLavender shadow-2xl hover:border-dragonfruit hover:shadow-dragonfruit transition-all duration-300 transform hover:scale-105 cursor-pointer"
+          className="group flex items-center gap-2 sm:gap-3 p-2.5 sm:px-4 sm:py-3 rounded-full bg-[#1c0d33]/95 backdrop-blur-xl border border-cardBorder text-lightLavender shadow-[0_8px_30px_rgba(0,0,0,0.7)] hover:border-dragonfruit hover:shadow-dragonfruit transition-all duration-300 transform active:scale-95 hover:scale-105 cursor-pointer"
           title="Connect with VIP Stylist"
         >
           <div className="relative">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-dragonfruit flex items-center justify-center text-white shadow-sm">
-              <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <div className="w-8 h-8 rounded-full bg-dragonfruit flex items-center justify-center text-white shadow-dragonfruit">
+              <MessageCircle className="w-4 h-4" />
             </div>
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#35D07F] rounded-full border-2 border-darkViolet" />
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#35D07F] rounded-full border-2 border-darkViolet animate-pulse" />
           </div>
           <div className="text-left hidden sm:block pr-1">
             <span className="text-[10px] uppercase font-bold tracking-widest text-dragonfruit block">
@@ -64,7 +64,7 @@ export const VIPStylistButton = () => {
         </button>
       ) : (
         /* Chat Box Popover */
-        <div className="w-[calc(100vw-24px)] max-w-sm sm:w-96 rounded-3xl bg-cardBg border border-cardBorder shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 flex flex-col">
+        <div className="w-[calc(100vw-24px)] max-w-sm sm:w-96 rounded-3xl bg-cardBg border border-cardBorder shadow-[0_20px_60px_rgba(0,0,0,0.9)] overflow-hidden animate-in zoom-in-95 duration-200 flex flex-col z-50">
           {/* Header */}
           <div className="p-4 bg-darkViolet border-b border-cardBorder flex items-center justify-between">
             <div className="flex items-center gap-3">

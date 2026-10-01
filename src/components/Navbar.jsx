@@ -210,9 +210,9 @@ export const Navbar = () => {
         </div>
 
         {/* FLOATING CURVED LUXURY BOUTIQUE NAVBAR */}
-        <div className="pt-2 sm:pt-2.5 lg:pt-3 pb-1 px-2.5 sm:px-4 lg:px-6 max-w-[1550px] mx-auto w-full">
+        <div className="pt-2 sm:pt-2.5 lg:pt-3 pb-1 px-2 sm:px-4 lg:px-6 max-w-[1550px] mx-auto w-full">
           <nav
-            className={`w-full rounded-full bg-[#1a0c2e]/95 backdrop-blur-2xl border border-cardBorder shadow-[0_10px_35px_rgba(0,0,0,0.6),0_0_20px_rgba(58,37,85,0.4)] px-2.5 sm:px-3.5 lg:px-5 py-1.5 sm:py-2 transition-all duration-300 hover:border-dragonfruit/50 ${
+            className={`w-full rounded-2xl lg:rounded-full bg-[#1a0c2e]/95 backdrop-blur-2xl border border-cardBorder shadow-[0_10px_35px_rgba(0,0,0,0.6),0_0_20px_rgba(58,37,85,0.4)] px-2.5 sm:px-3.5 lg:px-5 py-2 transition-all duration-300 hover:border-dragonfruit/50 ${
               isScrolled ? 'shadow-dragonfruit/20 border-dragonfruit/40 bg-[#160a28]/98' : ''
             }`}
           >
@@ -226,7 +226,7 @@ export const Navbar = () => {
               <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="w-8 h-8 rounded-full bg-inputBg/80 border border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                  className="w-8.5 h-8.5 rounded-xl bg-inputBg/80 border border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
                   aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 >
                   {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -236,7 +236,7 @@ export const Navbar = () => {
               {/* Mobile Center (Majhkhane): Brand Logo & Title */}
               <button
                 onClick={scrollToTop}
-                className="flex flex-col items-center justify-center text-center px-1.5 py-0.5 group cursor-pointer transition-transform active:scale-95 max-w-[210px]"
+                className="flex flex-col items-center justify-center text-center px-1.5 py-0.5 group cursor-pointer transition-transform active:scale-95 max-w-[220px]"
                 title="Return to Home"
               >
                 <div className="flex items-center gap-1.5">
@@ -256,7 +256,7 @@ export const Navbar = () => {
               <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   onClick={() => setIsSearchOpen(true)}
-                  className="w-8 h-8 rounded-full bg-inputBg/80 border border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-95"
+                  className="w-8.5 h-8.5 rounded-xl bg-inputBg/80 border border-inputBorder text-lightLavender hover:border-dragonfruit hover:text-dragonfruit flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-95"
                   title="Search Collection"
                   aria-label="Search"
                 >
@@ -838,25 +838,25 @@ export const Navbar = () => {
         </div>
       )}
 
-      {/* MOBILE FLOATING BOTTOM NAVIGATION DOCK (Thumb-zone luxury navigation) */}
+      {/* MOBILE FULL-WIDTH LUXURY APP TAB BAR (Native App Look, Edge-to-Edge, Safe-Area aware) */}
       <nav
-        className="lg:hidden fixed bottom-3 inset-x-3 sm:inset-x-6 z-40 max-w-md mx-auto rounded-full bg-[#180b2c]/95 backdrop-blur-2xl border border-cardBorder/80 shadow-[0_12px_35px_rgba(0,0,0,0.85)] px-3 py-1.5 flex items-center justify-around transition-all"
+        className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[#130725]/96 backdrop-blur-2xl border-t border-cardBorder/80 shadow-[0_-10px_35px_rgba(0,0,0,0.85)] px-2 sm:px-6 pt-2 pb-[max(0.65rem,env(safe-area-inset-bottom))] flex items-center justify-around transition-all"
         aria-label="Mobile Navigation"
       >
         {/* 1. Home */}
         <button
           onClick={scrollToTop}
-          className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-full transition-all cursor-pointer relative ${
+          className={`flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all cursor-pointer relative active:scale-90 ${
             activeNavSection === 'home'
-              ? 'text-dragonfruit scale-105'
+              ? 'text-dragonfruit font-bold'
               : 'text-mutedLavender hover:text-white'
           }`}
           title="Home"
         >
           <Home className="w-4 h-4" />
-          <span className="text-[9px] font-semibold mt-0.5">Home</span>
+          <span className="text-[9.5px] mt-0.5 tracking-tight font-medium">Home</span>
           {activeNavSection === 'home' && (
-            <span className="w-1 h-1 rounded-full bg-dragonfruit absolute -bottom-0.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-dragonfruit absolute -bottom-0.5 shadow-sm shadow-dragonfruit" />
           )}
         </button>
 
@@ -866,39 +866,39 @@ export const Navbar = () => {
             smoothScrollTo('collection', -85);
             setActiveNavSection('collection');
           }}
-          className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-full transition-all cursor-pointer relative ${
+          className={`flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all cursor-pointer relative active:scale-90 ${
             activeNavSection === 'collection'
-              ? 'text-dragonfruit scale-105'
+              ? 'text-dragonfruit font-bold'
               : 'text-mutedLavender hover:text-white'
           }`}
           title="Collection"
         >
           <Grid className="w-4 h-4" />
-          <span className="text-[9px] font-semibold mt-0.5">Catalog</span>
+          <span className="text-[9.5px] mt-0.5 tracking-tight font-medium">Catalog</span>
           {activeNavSection === 'collection' && (
-            <span className="w-1 h-1 rounded-full bg-dragonfruit absolute -bottom-0.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-dragonfruit absolute -bottom-0.5 shadow-sm shadow-dragonfruit" />
           )}
         </button>
 
-        {/* 3. Bespoke Studio (Center Raised Action) */}
+        {/* 3. Bespoke Studio (Center Elevated Action Button) */}
         <button
           onClick={() => {
             smoothScrollTo('bespoke-studio', -85);
             setActiveNavSection('custom-tailoring');
           }}
-          className="flex flex-col items-center justify-center -mt-3 group cursor-pointer"
+          className="flex flex-col items-center justify-center -mt-5 group cursor-pointer active:scale-90 transition-transform"
           title="Custom Tailoring Studio"
         >
-          <div className="w-11 h-11 rounded-full bg-dragonfruit text-white flex items-center justify-center shadow-md shadow-dragonfruit/25 group-hover:scale-105 group-active:scale-95 transition-all border-2 border-[#180b2c]">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#D81B60] via-[#FF2A8D] to-[#FF4696] text-white flex items-center justify-center shadow-lg shadow-dragonfruit/40 border-2 border-[#130725] group-hover:scale-105 transition-all">
             <Scissors className="w-5 h-5" />
           </div>
-          <span className="text-[9px] font-bold text-white mt-0.5">Bespoke</span>
+          <span className="text-[9.5px] font-bold text-white mt-0.5 tracking-tight">Bespoke</span>
         </button>
 
         {/* 4. Wishlist */}
         <button
           onClick={() => setIsWishlistOpen(true)}
-          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-full transition-all cursor-pointer text-mutedLavender hover:text-white relative"
+          className="flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all cursor-pointer text-mutedLavender hover:text-white relative active:scale-90"
           title="Wishlist"
         >
           <div className="relative">
@@ -909,13 +909,13 @@ export const Navbar = () => {
               </span>
             )}
           </div>
-          <span className="text-[9px] font-semibold mt-0.5">Wishlist</span>
+          <span className="text-[9.5px] mt-0.5 tracking-tight font-medium">Wishlist</span>
         </button>
 
         {/* 5. Bag */}
         <button
           onClick={() => setIsCartOpen(true)}
-          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-full transition-all cursor-pointer text-mutedLavender hover:text-white relative"
+          className="flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all cursor-pointer text-mutedLavender hover:text-white relative active:scale-90"
           title="Shopping Bag"
         >
           <div className="relative">
@@ -926,7 +926,7 @@ export const Navbar = () => {
               </span>
             )}
           </div>
-          <span className="text-[9px] font-semibold mt-0.5">Bag</span>
+          <span className="text-[9.5px] mt-0.5 tracking-tight font-medium">Bag</span>
         </button>
       </nav>
     </>

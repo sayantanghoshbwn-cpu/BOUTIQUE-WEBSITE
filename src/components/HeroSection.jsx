@@ -144,24 +144,26 @@ export const HeroSection = () => {
           </div>
 
           {/* VIP Patron Coupon Code Capsule */}
-          <div className="inline-flex flex-wrap items-center gap-2 sm:gap-3 p-2 pr-3.5 rounded-2xl bg-cardBg/90 border border-cardBorder hover:border-dragonfruit/60 transition-all shadow-card-glow max-w-lg w-full">
-            <div className="px-2.5 py-1 rounded-xl bg-dragonfruit/20 border border-dragonfruit/60 flex items-center gap-1.5 text-dragonfruit text-[11px] font-bold shrink-0">
-              <Crown className="w-3.5 h-3.5" />
-              <span>VIP PRIVILEGE</span>
-            </div>
-            <div className="text-xs text-lightLavender font-medium flex items-center gap-1.5 flex-1 min-w-[140px]">
-              <span className="text-mutedLavender">Code:</span>
-              <strong className="text-dragonfruit font-mono font-bold tracking-wider px-2 py-0.5 rounded bg-inputBg border border-inputBorder text-xs">
-                {commerceConfig.promoCode}
-              </strong>
-              <span className="text-[11px] text-mutedLavender">({commerceConfig.promoDiscountPercent}% OFF)</span>
+          <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 sm:gap-3 p-2.5 sm:p-2 sm:pr-3.5 rounded-2xl bg-cardBg/90 border border-cardBorder hover:border-dragonfruit/60 transition-all shadow-card-glow max-w-lg w-full">
+            <div className="flex items-center gap-2 min-w-0 flex-wrap xs:flex-nowrap">
+              <div className="px-2.5 py-1 rounded-xl bg-dragonfruit/20 border border-dragonfruit/60 flex items-center gap-1.5 text-dragonfruit text-[10.5px] sm:text-[11px] font-bold shrink-0">
+                <Crown className="w-3.5 h-3.5" />
+                <span>VIP PRIVILEGE</span>
+              </div>
+              <div className="text-xs text-lightLavender font-medium flex items-center gap-1 min-w-0">
+                <span className="text-mutedLavender">Code:</span>
+                <strong className="text-dragonfruit font-mono font-bold tracking-wider px-2 py-0.5 rounded bg-inputBg border border-inputBorder text-xs">
+                  {commerceConfig.promoCode}
+                </strong>
+                <span className="text-[11px] text-mutedLavender shrink-0">({commerceConfig.promoDiscountPercent}% OFF)</span>
+              </div>
             </div>
             <button
               onClick={handleCopyAndApply}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shrink-0 ${
+              className={`w-full sm:w-auto px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0 ${
                 appliedPromo === commerceConfig.promoCode || copied
-                  ? 'bg-[#35D07F] text-[#120824] shadow-md shadow-[#35D07F]/40 scale-105'
-                  : 'bg-dragonfruit text-white hover:bg-[#FF4696] hover:text-[#1E1033] shadow-dragonfruit'
+                  ? 'bg-[#35D07F] text-[#120824] shadow-md shadow-[#35D07F]/40 scale-100 sm:scale-105'
+                  : 'bg-dragonfruit text-white hover:bg-[#FF4696] hover:text-[#1E1033] shadow-dragonfruit active:scale-95'
               }`}
             >
               {appliedPromo === commerceConfig.promoCode || copied ? (
