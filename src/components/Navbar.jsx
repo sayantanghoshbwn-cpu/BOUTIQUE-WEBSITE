@@ -158,6 +158,44 @@ export const Navbar = () => {
     { id: 'Accessories', label: 'Artisanal Clutches', emoji: '👝', desc: 'Jewel encrusted brass' }
   ];
 
+  const atelierMenuOptions = [
+    {
+      id: 'custom-tailoring',
+      target: 'bespoke-studio',
+      label: 'Custom Tailoring Studio',
+      icon: Scissors,
+      desc: '3D Virtual & in-person fittings'
+    },
+    {
+      id: 'lookbook',
+      target: 'lookbook',
+      label: 'Paris Runway Lookbook 2026',
+      icon: Sparkles,
+      desc: 'Interactive hotspots & editorial'
+    },
+    {
+      id: 'our-story',
+      target: 'atelier-story',
+      label: 'Our Heritage Story',
+      icon: BookOpen,
+      desc: 'Centuries of French craftsmanship'
+    },
+    {
+      id: 'reviews',
+      target: 'testimonials',
+      label: 'VIP Client Reviews',
+      icon: Star,
+      desc: '4.9★ Global patron accolades'
+    },
+    {
+      id: 'contact',
+      target: 'salons',
+      label: 'Private Salons & Concierge',
+      icon: MapPin,
+      desc: 'Paris • London • Mumbai • Kolkata'
+    }
+  ];
+
   return (
     <>
       <header className="sticky top-0 z-50 w-full transition-all duration-300">
@@ -619,22 +657,28 @@ export const Navbar = () => {
             </div>
 
             {/* 2. Scrollable Body Content */}
-            <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5 space-y-4 no-scrollbar">
+            <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5 space-y-4 pb-6 no-scrollbar">
               
               {/* VIP Promo Banner Inside Drawer */}
-              <div className="p-3 rounded-2xl bg-cardBg border border-cardBorder flex items-center justify-between gap-2 shadow-md">
-                <div className="flex items-center gap-2 min-w-0">
-                  <Crown className="w-4 h-4 text-dragonfruit shrink-0" />
+              <div className="p-3 rounded-2xl bg-[#1C0D36] border border-[#3A2555] flex items-center justify-between gap-2 shadow-md">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-[#120624] border border-[#3A2555] flex items-center justify-center text-dragonfruit shrink-0">
+                    <Crown className="w-4 h-4" />
+                  </div>
                   <div className="min-w-0">
-                    <span className="text-[9.5px] uppercase font-bold text-dragonfruit tracking-wider block">Privilege Code</span>
-                    <span className="font-mono font-bold text-[11px] sm:text-xs text-white truncate block">
-                      {commerceConfig.promoCode} ({commerceConfig.promoDiscountPercent}% OFF)
+                    <span className="text-[9.5px] uppercase font-bold text-dragonfruit tracking-wider block">VIP Privilege Code</span>
+                    <span className="font-mono font-bold text-xs text-white truncate block">
+                      {commerceConfig.promoCode} • {commerceConfig.promoDiscountPercent}% OFF
                     </span>
                   </div>
                 </div>
                 <button
                   onClick={handleTopCouponApply}
-                  className="px-2.5 py-1.5 rounded-lg bg-dragonfruit text-white text-[10.5px] font-bold shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] transition-all cursor-pointer shrink-0"
+                  className={`px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer shrink-0 ${
+                    appliedPromo === commerceConfig.promoCode || copiedCoupon
+                      ? 'bg-[#35D07F] text-[#120824] shadow-sm'
+                      : 'bg-dragonfruit text-white shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033]'
+                  }`}
                 >
                   {appliedPromo === commerceConfig.promoCode || copiedCoupon ? 'Applied ✓' : 'Apply'}
                 </button>
@@ -643,15 +687,17 @@ export const Navbar = () => {
               {/* Currency Selector & Confirmed Bookings Pill Row */}
               <div className="grid grid-cols-2 gap-2">
                 {/* Currency Switcher */}
-                <div className="p-2 sm:p-2.5 rounded-xl bg-inputBg border border-inputBorder flex items-center justify-between min-w-0">
-                  <div className="flex items-center gap-1.5 text-xs text-mutedLavender shrink-0">
-                    <Globe className="w-3.5 h-3.5 text-dragonfruit" />
-                    <span className="font-bold text-white">{CURRENCIES[currency]?.symbol || '₹'} {currency}</span>
+                <div className="p-2 sm:p-2.5 rounded-2xl bg-[#1C0D36] border border-[#3A2555] flex items-center justify-between min-w-0">
+                  <div className="flex items-center gap-1.5 text-xs text-[#D3C6F0] shrink-0">
+                    <div className="w-6 h-6 rounded-lg bg-[#120624] border border-[#3A2555] flex items-center justify-center text-dragonfruit">
+                      <Globe className="w-3.5 h-3.5" />
+                    </div>
+                    <span className="font-bold text-white text-[11px]">{CURRENCIES[currency]?.symbol || '₹'} {currency}</span>
                   </div>
                   <select
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
-                    className="bg-[#120624] text-white text-[11px] font-semibold focus:outline-none cursor-pointer text-right min-w-0 px-2 py-1 rounded-lg border border-cardBorder"
+                    className="bg-[#120624] text-white text-[10.5px] font-semibold focus:outline-none cursor-pointer text-right min-w-0 px-2 py-1 rounded-lg border border-[#3A2555]"
                   >
                     {Object.keys(CURRENCIES).map((c) => (
                       <option key={c} value={c} className="bg-[#120624] text-white">
@@ -668,30 +714,32 @@ export const Navbar = () => {
                     if (bookingsCount > 0) openBookingsDrawer();
                     else openFittingModal();
                   }}
-                  className={`p-2 sm:p-2.5 rounded-xl border flex items-center justify-between text-[11px] cursor-pointer transition-all min-w-0 ${
+                  className={`p-2 sm:p-2.5 rounded-2xl border flex items-center justify-between text-[11px] cursor-pointer transition-all min-w-0 ${
                     bookingsCount > 0
                       ? 'bg-dragonfruit/20 border-dragonfruit text-dragonfruit shadow-sm'
-                      : 'bg-inputBg/80 border-inputBorder text-mutedLavender hover:text-white hover:border-dragonfruit'
+                      : 'bg-[#1C0D36] border-[#3A2555] text-white hover:border-dragonfruit'
                   }`}
                 >
                   <div className="flex items-center gap-1.5 min-w-0 truncate">
-                    <Calendar className="w-3.5 h-3.5 shrink-0" />
-                    <span className="font-semibold truncate">
+                    <div className="w-6 h-6 rounded-lg bg-[#120624] border border-[#3A2555] flex items-center justify-center text-dragonfruit shrink-0">
+                      <Calendar className="w-3.5 h-3.5" />
+                    </div>
+                    <span className="font-semibold truncate text-[11px]">
                       {bookingsCount > 0 ? `Bookings (${bookingsCount})` : 'Book Fitting'}
                     </span>
                   </div>
-                  <ArrowRight className="w-3 h-3 shrink-0 ml-1 opacity-60" />
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0 ml-1 opacity-60 text-dragonfruit" />
                 </button>
               </div>
 
-              {/* Category Showcase Section */}
+              {/* 1. Category Showcase Section */}
               <div className="space-y-2">
                 <span className="text-[10.5px] uppercase tracking-[0.2em] font-bold text-dragonfruit px-1 block mb-1">
                   Haute Couture Collections
                 </span>
 
                 {categoryOptions.map((cat) => {
-                  const isSelected = selectedCategory === cat.id;
+                  const isSelected = selectedCategory === cat.id && activeNavSection === 'collection';
                   return (
                     <button
                       key={cat.id}
@@ -727,77 +775,54 @@ export const Navbar = () => {
                 })}
               </div>
 
-              {/* Atelier Experience & Navigation Section */}
-              <div className="space-y-1 pt-2 border-t border-cardBorder/50">
-                <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-dragonfruit px-2 block mb-1">
+              {/* 2. Atelier Experience & Navigation Section */}
+              <div className="space-y-2 pt-2 border-t border-[#3A2555]/60">
+                <span className="text-[10.5px] uppercase tracking-[0.2em] font-bold text-dragonfruit px-1 block mb-1">
                   Atelier Experience & Salons
                 </span>
 
-                {/* Custom Tailoring Studio */}
-                <button
-                  onClick={() => scrollToSection('bespoke-studio', 'custom-tailoring')}
-                  className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium text-lightLavender hover:text-white hover:bg-cardBg transition-all flex items-center justify-between cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Scissors className="w-4 h-4 text-dragonfruit" />
-                    <span>Custom Tailoring Studio</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
-
-                {/* Runway Lookbook */}
-                <button
-                  onClick={() => scrollToSection('lookbook', 'lookbook')}
-                  className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium text-lightLavender hover:text-white hover:bg-cardBg transition-all flex items-center justify-between cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Sparkles className="w-4 h-4 text-dragonfruit" />
-                    <span>Paris Runway Lookbook 2026</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
-
-                {/* Our Heritage Story */}
-                <button
-                  onClick={() => scrollToSection('atelier-story', 'our-story')}
-                  className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium text-lightLavender hover:text-white hover:bg-cardBg transition-all flex items-center justify-between cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <BookOpen className="w-4 h-4 text-dragonfruit" />
-                    <span>Our Heritage Story</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
-
-                {/* VIP Client Reviews */}
-                <button
-                  onClick={() => scrollToSection('testimonials', 'reviews')}
-                  className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium text-lightLavender hover:text-white hover:bg-cardBg transition-all flex items-center justify-between cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Star className="w-4 h-4 text-dragonfruit" />
-                    <span>VIP Client Reviews</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
-
-                {/* Contact & Salons */}
-                <button
-                  onClick={() => scrollToSection('salons', 'contact')}
-                  className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium text-lightLavender hover:text-white hover:bg-cardBg transition-all flex items-center justify-between cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <MapPin className="w-4 h-4 text-dragonfruit" />
-                    <span>Private Salons & Concierge</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
+                {atelierMenuOptions.map((item) => {
+                  const IconComponent = item.icon;
+                  const isSelected = activeNavSection === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.target, item.id)}
+                      className={`w-full text-left p-2.5 sm:p-3 rounded-2xl text-xs font-medium transition-all duration-200 flex items-center justify-between cursor-pointer border ${
+                        isSelected
+                          ? 'bg-dragonfruit text-white border-dragonfruit shadow-md shadow-dragonfruit/30'
+                          : 'bg-[#1C0D36] hover:bg-[#281448] border-[#3A2555] text-white hover:border-dragonfruit/60'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-inner ${
+                          isSelected ? 'bg-white/20 text-white' : 'bg-[#120624] border border-[#3A2555] text-dragonfruit'
+                        }`}>
+                          <IconComponent className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="block font-fashion font-bold text-sm text-white truncate">
+                            {item.label}
+                          </span>
+                          <span className={`block text-[10.5px] mt-0.5 truncate ${
+                            isSelected ? 'text-white/90' : 'text-[#D3C6F0]'
+                          }`}>
+                            {item.desc}
+                          </span>
+                        </div>
+                      </div>
+                      <ArrowRight className={`w-4 h-4 shrink-0 transition-transform ${
+                        isSelected ? 'text-white' : 'text-dragonfruit opacity-80'
+                      }`} />
+                    </button>
+                  );
+                })}
               </div>
 
             </div>
 
             {/* 3. Drawer Bottom Action Buttons & Concierge */}
-            <div className="p-4 sm:p-5 border-t border-cardBorder/70 bg-[#190c2e] space-y-2 shrink-0">
+            <div className="p-4 sm:p-5 border-t border-[#3A2555] bg-[#120624] space-y-2 shrink-0">
               
               {/* Primary Video Fitting CTA */}
               <button
@@ -805,7 +830,7 @@ export const Navbar = () => {
                   setIsMobileMenuOpen(false);
                   openFittingModal();
                 }}
-                className="w-full py-2.5 sm:py-3 rounded-xl bg-dragonfruit text-white font-bold text-xs uppercase tracking-wider shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
+                className="w-full py-3 rounded-2xl bg-dragonfruit text-white font-bold text-xs uppercase tracking-wider shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Book Private Video Fitting</span>
@@ -817,7 +842,7 @@ export const Navbar = () => {
                   setIsMobileMenuOpen(false);
                   setIsCartOpen(true);
                 }}
-                className="w-full py-2 sm:py-2.5 rounded-xl bg-cardBg border border-cardBorder text-lightLavender hover:border-dragonfruit hover:text-white text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all"
+                className="w-full py-2.5 rounded-2xl bg-[#1C0D36] border border-[#3A2555] text-white hover:border-dragonfruit hover:text-white text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all"
               >
                 <ShoppingBag className="w-4 h-4 text-dragonfruit" />
                 <span>View Shopping Bag ({cartCount})</span>
@@ -827,12 +852,12 @@ export const Navbar = () => {
               <div className="pt-1.5 text-[10px] sm:text-[10.5px] text-mutedLavender flex items-center justify-between gap-1">
                 <a
                   href={`tel:${contactConfig.phone}`}
-                  className="flex items-center gap-1 hover:text-dragonfruit transition-colors truncate"
+                  className="flex items-center gap-1.5 hover:text-dragonfruit transition-colors truncate"
                 >
                   <Phone className="w-3 h-3 text-dragonfruit shrink-0" />
                   <span className="truncate">VIP: {contactConfig.phone}</span>
                 </a>
-                <span className="text-dragonfruit font-medium shrink-0">Paris • London</span>
+                <span className="text-dragonfruit font-medium shrink-0">Paris • London • Mumbai</span>
               </div>
 
             </div>
