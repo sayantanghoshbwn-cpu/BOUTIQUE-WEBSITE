@@ -35,7 +35,7 @@ export const salonsConfig = [
 ];
 
 export const commerceConfig = {
-  defaultCurrency: env.VITE_DEFAULT_CURRENCY || 'USD',
+  defaultCurrency: env.VITE_DEFAULT_CURRENCY || 'INR',
   freeShippingThreshold: Number(env.VITE_FREE_SHIPPING_THRESHOLD) || 500,
   standardShippingFee: Number(env.VITE_STANDARD_SHIPPING_FEE) || 45,
   promoCode: env.VITE_PROMO_CODE || 'INDIA 2026',

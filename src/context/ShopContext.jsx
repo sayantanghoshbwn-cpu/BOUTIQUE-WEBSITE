@@ -57,8 +57,15 @@ export const ShopProvider = ({ children }) => {
     }
   });
 
-  // Currency from .env config
-  const [currency, setCurrency] = useState(commerceConfig.defaultCurrency);
+  // Currency with localStorage persistence and default to INR
+  const [currency, setCurrency] = useState(() => {
+    try {
+      const saved = localStorage.getItem('mv_currency');
+      return saved && CURRENCIES[saved] ? saved : (commerceConfig.defaultCurrency || 'INR');
+    } catch {
+      return commerceConfig.defaultCurrency || 'INR';
+    }
+  });
 
   // Modals and Drawers
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -80,6 +87,14 @@ export const ShopProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
   // Sync to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('mv_currency', currency);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [currency]);
+
   useEffect(() => {
     try {
       localStorage.setItem('mv_cart', JSON.stringify(cart));
@@ -117,12 +132,13 @@ export const ShopProvider = ({ children }) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
-  // Price formatter with active currency
+  // Price formatter with active currency and locale awareness
   const formatPrice = (amountUSD = 0) => {
     const validAmount = typeof amountUSD === 'number' && !isNaN(amountUSD) ? amountUSD : 0;
-    const curr = CURRENCIES[currency] || CURRENCIES.USD;
+    const curr = CURRENCIES[currency] || CURRENCIES.INR || CURRENCIES.USD;
     const converted = Math.round(validAmount * curr.rate);
-    return `${curr.symbol}${converted.toLocaleString()}`;
+    const locale = currency === 'INR' ? 'en-IN' : 'en-US';
+    return `${curr.symbol}${converted.toLocaleString(locale)}`;
   };
 
   // Category navigation & smooth scroll

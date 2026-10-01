@@ -27,6 +27,7 @@ export const CheckoutModal = () => {
     formatPrice,
     cartSubtotalUSD,
     discountAmountUSD,
+    discountPercent,
     shippingFeeUSD,
     cartTotalUSD,
     appliedPromo,

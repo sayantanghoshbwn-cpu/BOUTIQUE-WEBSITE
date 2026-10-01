@@ -1,8 +1,9 @@
 export const CURRENCIES = {
+  INR: { symbol: '₹', rate: 86.5, label: 'INR (₹)' },
   USD: { symbol: '$', rate: 1, label: 'USD ($)' },
   EUR: { symbol: '€', rate: 0.92, label: 'EUR (€)' },
   GBP: { symbol: '£', rate: 0.79, label: 'GBP (£)' },
-  INR: { symbol: '₹', rate: 86.5, label: 'INR (₹)' },
+  AED: { symbol: 'AED ', rate: 3.67, label: 'AED (د.إ)' },
 };
 
 export const PRODUCTS = [

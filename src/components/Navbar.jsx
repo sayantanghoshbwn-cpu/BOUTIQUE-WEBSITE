@@ -306,49 +306,85 @@ export const Navbar = () => {
                 </button>
 
                 {/* 2. Collections Dropdown Pill */}
-                <div className="relative" ref={collectionsRef}>
+                <div
+                  className="relative group/dropdown"
+                  ref={collectionsRef}
+                  onMouseEnter={() => setIsCollectionsDropdownOpen(true)}
+                  onMouseLeave={() => setIsCollectionsDropdownOpen(false)}
+                >
                   <button
                     onClick={() => setIsCollectionsDropdownOpen(!isCollectionsDropdownOpen)}
-                    onMouseEnter={() => setIsCollectionsDropdownOpen(true)}
-                    className={`px-2.5 py-1 rounded-full transition-all flex items-center gap-1 cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 cursor-pointer ${
                       activeNavSection === 'collection' || isCollectionsDropdownOpen
-                        ? 'bg-dragonfruit/25 text-dragonfruit font-bold border border-dragonfruit/40 shadow-sm'
+                        ? 'bg-dragonfruit text-white font-bold shadow-md shadow-dragonfruit/30'
                         : 'text-lightLavender hover:text-white hover:bg-dragonfruit/10'
                     }`}
                   >
                     <span>Collections</span>
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isCollectionsDropdownOpen ? 'rotate-180 text-dragonfruit' : 'text-mutedLavender'}`} />
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isCollectionsDropdownOpen ? 'rotate-180 text-white' : 'text-mutedLavender'}`} />
                   </button>
 
-                  {/* Luxury Glass Dropdown Menu */}
+                  {/* Luxury Solid High-Contrast Dropdown Menu */}
                   {isCollectionsDropdownOpen && (
                     <div
-                      onMouseLeave={() => setIsCollectionsDropdownOpen(false)}
-                      className="absolute top-full left-0 mt-2 w-64 rounded-2xl bg-[#1c0d33]/98 backdrop-blur-3xl border border-cardBorder shadow-[0_15px_40px_rgba(0,0,0,0.8)] p-2 z-50 animate-in fade-in zoom-in-95 duration-200"
+                      className="absolute top-full left-0 pt-2 z-[100]"
+                      onMouseEnter={() => setIsCollectionsDropdownOpen(true)}
                     >
-                      <div className="px-2.5 py-1.5 text-[9.5px] font-bold tracking-[0.2em] uppercase text-dragonfruit border-b border-cardBorder/60 mb-1">
-                        Haute Couture Archives
-                      </div>
-                      {categoryOptions.map((cat) => (
-                        <button
-                          key={cat.id}
-                          onClick={() => handleCategoryNav(cat.id)}
-                          className={`w-full text-left px-2.5 py-2 rounded-xl text-xs transition-all flex items-center justify-between cursor-pointer group ${
-                            selectedCategory === cat.id && activeNavSection === 'collection'
-                              ? 'bg-dragonfruit/20 text-dragonfruit font-bold border border-dragonfruit/30'
-                              : 'text-lightLavender hover:bg-dragonfruit/15 hover:text-white'
-                          }`}
-                        >
+                      <div className="w-88 sm:w-96 rounded-2xl bg-[#110522] border-2 border-[#FF2A8D]/50 shadow-[0_25px_70px_rgba(0,0,0,0.98),0_0_35px_rgba(255,42,141,0.35)] p-3 space-y-2 animate-in fade-in zoom-in-95 duration-200">
+                        {/* Dropdown Header */}
+                        <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-[#1C0D36] border border-[#3A2555] mb-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm">{cat.emoji}</span>
-                            <div>
-                              <span className="block font-semibold group-hover:text-dragonfruit transition-colors">{cat.label}</span>
-                              <span className="block text-[9.5px] text-mutedLavender/80 font-normal">{cat.desc}</span>
-                            </div>
+                            <Sparkles className="w-4 h-4 text-dragonfruit animate-pulse" />
+                            <span className="text-[10.5px] font-bold tracking-[0.22em] uppercase text-dragonfruit">
+                              Haute Couture Archives
+                            </span>
                           </div>
-                          <ArrowRight className="w-3 h-3 text-dragonfruit opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </button>
-                      ))}
+                          <span className="text-[10px] font-bold text-white bg-[#110522] px-2.5 py-0.5 rounded-full border border-cardBorder">
+                            5 Curations
+                          </span>
+                        </div>
+
+                        {/* Dropdown Category Cards */}
+                        {categoryOptions.map((cat) => {
+                          const isSelected = selectedCategory === cat.id && activeNavSection === 'collection';
+                          return (
+                            <button
+                              key={cat.id}
+                              onClick={() => handleCategoryNav(cat.id)}
+                              className={`w-full text-left p-2.5 sm:p-3 rounded-xl text-xs transition-all duration-200 flex items-center justify-between cursor-pointer group border ${
+                                isSelected
+                                  ? 'bg-dragonfruit text-white border-dragonfruit shadow-lg shadow-dragonfruit/40 scale-[1.01]'
+                                  : 'bg-[#1C0D36] hover:bg-[#FF2A8D] border-[#3A2555] hover:border-[#FF2A8D] text-white hover:text-white hover:shadow-md hover:shadow-dragonfruit/20'
+                              }`}
+                            >
+                              <div className="flex items-center gap-3.5 min-w-0">
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 shadow-inner transition-colors ${
+                                  isSelected
+                                    ? 'bg-white/20 text-white'
+                                    : 'bg-[#110522] border border-[#3A2555] group-hover:bg-white/20 group-hover:border-white/30'
+                                }`}>
+                                  {cat.emoji}
+                                </div>
+                                <div className="min-w-0">
+                                  <span className="block font-fashion font-bold text-sm sm:text-[14.5px] leading-tight text-white group-hover:text-white transition-colors truncate">
+                                    {cat.label}
+                                  </span>
+                                  <span className={`block text-[11px] font-normal mt-0.5 transition-colors truncate ${
+                                    isSelected ? 'text-white/90' : 'text-[#D3C6F0] group-hover:text-white/90'
+                                  }`}>
+                                    {cat.desc}
+                                  </span>
+                                </div>
+                              </div>
+                              <ArrowRight className={`w-4 h-4 shrink-0 transition-transform duration-200 ml-2 ${
+                                isSelected
+                                  ? 'text-white translate-x-1'
+                                  : 'text-dragonfruit group-hover:text-white opacity-80 group-hover:opacity-100 group-hover:translate-x-1.5'
+                              }`} />
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -434,32 +470,43 @@ export const Navbar = () => {
                 <div className="relative hidden md:block" ref={currencyRef}>
                   <button
                     onClick={() => setIsCurrencyDropdownOpen(!isCurrencyDropdownOpen)}
-                    className="flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-full bg-inputBg border border-inputBorder text-[10.5px] sm:text-[11px] text-lightLavender hover:border-dragonfruit transition-all cursor-pointer shadow-sm"
-                    title="Change Currency"
+                    className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-inputBg border border-inputBorder text-[11px] sm:text-xs text-lightLavender hover:border-dragonfruit transition-all cursor-pointer shadow-sm hover:scale-105"
+                    title="Change Active Currency"
                   >
-                    <Globe className="w-3 h-3 text-mutedLavender" />
-                    <span className="font-semibold">{currency}</span>
-                    <ChevronDown className="w-2.5 h-2.5 text-mutedLavender" />
+                    <Globe className="w-3.5 h-3.5 text-dragonfruit" />
+                    <span className="font-bold text-white tracking-wide">
+                      {CURRENCIES[currency]?.symbol || '₹'} {currency}
+                    </span>
+                    <ChevronDown className={`w-3 h-3 text-mutedLavender transition-transform duration-200 ${isCurrencyDropdownOpen ? 'rotate-180 text-dragonfruit' : ''}`} />
                   </button>
 
                   {isCurrencyDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-32 bg-cardBg border border-cardBorder rounded-2xl shadow-2xl py-1.5 z-50 animate-in fade-in zoom-in-95">
-                      {Object.keys(CURRENCIES).map((currCode) => (
-                        <button
-                          key={currCode}
-                          onClick={() => {
-                            setCurrency(currCode);
-                            setIsCurrencyDropdownOpen(false);
-                          }}
-                          className={`w-full text-left px-3 py-1.5 text-xs flex items-center justify-between transition-colors cursor-pointer ${
-                            currency === currCode
-                              ? 'bg-dragonfruit/20 text-dragonfruit font-bold'
-                              : 'text-lightLavender hover:bg-[#FF4696] hover:text-[#1E1033]'
-                          }`}
-                        >
-                          <span>{CURRENCIES[currCode].label}</span>
-                        </button>
-                      ))}
+                    <div className="absolute right-0 mt-3 w-44 bg-[#120624] border-2 border-[#3A2555] rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_20px_rgba(255,42,141,0.2)] p-2 z-[100] animate-in fade-in zoom-in-95 duration-200 space-y-1">
+                      <div className="px-2.5 py-1 text-[9.5px] font-bold tracking-[0.2em] uppercase text-dragonfruit border-b border-[#3A2555]/80 mb-1 flex items-center justify-between">
+                        <span>Select Currency</span>
+                        <span className="text-[8.5px] text-mutedLavender">Default: INR</span>
+                      </div>
+                      {Object.keys(CURRENCIES).map((currCode) => {
+                        const curr = CURRENCIES[currCode];
+                        const isCurrent = currency === currCode;
+                        return (
+                          <button
+                            key={currCode}
+                            onClick={() => {
+                              setCurrency(currCode);
+                              setIsCurrencyDropdownOpen(false);
+                            }}
+                            className={`w-full text-left px-2.5 py-1.5 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer border ${
+                              isCurrent
+                                ? 'bg-dragonfruit text-white font-bold border-dragonfruit shadow-sm'
+                                : 'bg-[#1D0E38] hover:bg-[#2A154F] border-transparent text-white hover:text-dragonfruit'
+                            }`}
+                          >
+                            <span className="font-semibold">{curr.label}</span>
+                            <span className="text-[11px] font-bold opacity-90">{curr.symbol}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -596,19 +643,19 @@ export const Navbar = () => {
               {/* Currency Selector & Confirmed Bookings Pill Row */}
               <div className="grid grid-cols-2 gap-2">
                 {/* Currency Switcher */}
-                <div className="p-2 sm:p-2.5 rounded-xl bg-inputBg/80 border border-inputBorder flex items-center justify-between min-w-0">
-                  <div className="flex items-center gap-1 text-[11px] text-mutedLavender shrink-0">
+                <div className="p-2 sm:p-2.5 rounded-xl bg-inputBg border border-inputBorder flex items-center justify-between min-w-0">
+                  <div className="flex items-center gap-1.5 text-xs text-mutedLavender shrink-0">
                     <Globe className="w-3.5 h-3.5 text-dragonfruit" />
-                    <span className="font-semibold text-lightLavender">{currency}</span>
+                    <span className="font-bold text-white">{CURRENCIES[currency]?.symbol || '₹'} {currency}</span>
                   </div>
                   <select
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
-                    className="bg-transparent text-lightLavender text-[11px] font-semibold focus:outline-none cursor-pointer text-right min-w-0 max-w-[65px]"
+                    className="bg-[#120624] text-white text-[11px] font-semibold focus:outline-none cursor-pointer text-right min-w-0 px-2 py-1 rounded-lg border border-cardBorder"
                   >
                     {Object.keys(CURRENCIES).map((c) => (
-                      <option key={c} value={c} className="bg-cardBg text-lightLavender">
-                        {c} ({CURRENCIES[c].symbol})
+                      <option key={c} value={c} className="bg-[#120624] text-white">
+                        {CURRENCIES[c].label}
                       </option>
                     ))}
                   </select>
@@ -638,90 +685,46 @@ export const Navbar = () => {
               </div>
 
               {/* Category Showcase Section */}
-              <div className="space-y-1">
-                <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-dragonfruit px-2 block mb-1">
+              <div className="space-y-2">
+                <span className="text-[10.5px] uppercase tracking-[0.2em] font-bold text-dragonfruit px-1 block mb-1">
                   Haute Couture Collections
                 </span>
 
-                {/* All Creations */}
-                <button
-                  onClick={() => handleCategoryNav('all')}
-                  className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium transition-all flex items-center justify-between cursor-pointer ${
-                    selectedCategory === 'all'
-                      ? 'bg-dragonfruit/20 text-dragonfruit font-bold border border-dragonfruit/40'
-                      : 'text-lightLavender hover:bg-cardBg hover:text-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Grid className="w-4 h-4 text-dragonfruit" />
-                    <span>All Masterpieces</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
-
-                {/* Dresses & Gowns */}
-                <button
-                  onClick={() => handleCategoryNav('Dresses & Gowns')}
-                  className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium transition-all flex items-center justify-between cursor-pointer ${
-                    selectedCategory === 'Dresses & Gowns'
-                      ? 'bg-dragonfruit/20 text-dragonfruit font-bold border border-dragonfruit/40'
-                      : 'text-lightLavender hover:bg-cardBg hover:text-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-sm">👗</span>
-                    <span>Dresses & Evening Gowns</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
-
-                {/* Bridal & Sarees */}
-                <button
-                  onClick={() => handleCategoryNav('Bridal & Sarees')}
-                  className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium transition-all flex items-center justify-between cursor-pointer ${
-                    selectedCategory === 'Bridal & Sarees'
-                      ? 'bg-dragonfruit/20 text-dragonfruit font-bold border border-dragonfruit/40'
-                      : 'text-lightLavender hover:bg-cardBg hover:text-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Crown className="w-4 h-4 text-dragonfruit" />
-                    <span>Royal Bridal & Silk Sarees</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
-
-                {/* Blazers & Suits */}
-                <button
-                  onClick={() => handleCategoryNav('Blazers & Suits')}
-                  className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium transition-all flex items-center justify-between cursor-pointer ${
-                    selectedCategory === 'Blazers & Suits'
-                      ? 'bg-dragonfruit/20 text-dragonfruit font-bold border border-dragonfruit/40'
-                      : 'text-lightLavender hover:bg-cardBg hover:text-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-sm">🧥</span>
-                    <span>Velvet Smoking Blazers</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
-
-                {/* Accessories */}
-                <button
-                  onClick={() => handleCategoryNav('Accessories')}
-                  className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium transition-all flex items-center justify-between cursor-pointer ${
-                    selectedCategory === 'Accessories'
-                      ? 'bg-dragonfruit/20 text-dragonfruit font-bold border border-dragonfruit/40'
-                      : 'text-lightLavender hover:bg-cardBg hover:text-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-sm">👝</span>
-                    <span>Artisanal Clutches & Bags</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-                </button>
+                {categoryOptions.map((cat) => {
+                  const isSelected = selectedCategory === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => handleCategoryNav(cat.id)}
+                      className={`w-full text-left p-2.5 sm:p-3 rounded-2xl text-xs font-medium transition-all duration-200 flex items-center justify-between cursor-pointer border ${
+                        isSelected
+                          ? 'bg-dragonfruit text-white border-dragonfruit shadow-md shadow-dragonfruit/30'
+                          : 'bg-[#1C0D36] hover:bg-[#281448] border-[#3A2555] text-white hover:border-dragonfruit/60'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-base shrink-0 shadow-inner ${
+                          isSelected ? 'bg-white/20 text-white' : 'bg-[#120624] border border-[#3A2555]'
+                        }`}>
+                          {cat.emoji}
+                        </div>
+                        <div className="min-w-0">
+                          <span className="block font-fashion font-bold text-sm text-white truncate">
+                            {cat.label}
+                          </span>
+                          <span className={`block text-[10.5px] mt-0.5 truncate ${
+                            isSelected ? 'text-white/90' : 'text-[#D3C6F0]'
+                          }`}>
+                            {cat.desc}
+                          </span>
+                        </div>
+                      </div>
+                      <ArrowRight className={`w-4 h-4 shrink-0 transition-transform ${
+                        isSelected ? 'text-white' : 'text-dragonfruit opacity-80'
+                      }`} />
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Atelier Experience & Navigation Section */}
