@@ -27,7 +27,6 @@ export const HeroSection = () => {
   } = useShop();
 
   const [copied, setCopied] = useState(false);
-  const [heroPromoInput, setHeroPromoInput] = useState('');
 
   const heroSlides = [
     {

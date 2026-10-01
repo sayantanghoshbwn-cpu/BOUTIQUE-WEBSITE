@@ -28,7 +28,7 @@ export const smoothScrollTo = (target, offset = -85) => {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
   } else if (element) {
-    const y = element.getBoundingClientRect().top + window.pageYOffset + offset;
+    const y = element.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0) + offset;
     window.scrollTo({ top: y, behavior: 'smooth' });
   }
 };

@@ -76,25 +76,28 @@ export const LookbookSection = () => {
 
             {/* Interactive Hotspot Pins */}
             {current.hotspots.map((spot, idx) => (
-              <div
+              <button
+                type="button"
                 key={idx}
-                className="absolute group/pin cursor-pointer transform -translate-x-1/2 -translate-y-1/2"
+                onClick={() => openQuickView(matchedProduct)}
+                className="absolute group/pin cursor-pointer transform -translate-x-1/2 -translate-y-1/2 focus:outline-none"
                 style={{ top: spot.top, left: spot.left }}
+                title={`View ${spot.label} — ${spot.product}`}
               >
                 {/* Pulsing Pin */}
                 <div className="relative">
                   <div className="w-7 h-7 rounded-full bg-dragonfruit/40 animate-ping absolute inset-0" />
-                  <div className="w-7 h-7 rounded-full bg-dragonfruit border-2 border-white shadow-dragonfruit flex items-center justify-center text-white text-[10px] font-bold">
+                  <div className="w-7 h-7 rounded-full bg-dragonfruit border-2 border-white shadow-dragonfruit flex items-center justify-center text-white text-[10px] font-bold transition-transform group-hover/pin:scale-110">
                     +
                   </div>
                 </div>
 
-                {/* Tooltip on hover */}
-                <div className="absolute left-9 top-1/2 -translate-y-1/2 hidden group-hover/pin:block whitespace-nowrap px-3.5 py-2 rounded-xl bg-cardBg/95 backdrop-blur-md border border-dragonfruit shadow-2xl text-xs z-30">
+                {/* Tooltip on hover/focus */}
+                <div className="absolute left-9 top-1/2 -translate-y-1/2 hidden group-hover/pin:block group-focus/pin:block whitespace-nowrap px-3.5 py-2 rounded-xl bg-cardBg/95 backdrop-blur-md border border-dragonfruit shadow-2xl text-xs z-30 text-left">
                   <span className="block font-bold text-mainHeading">{spot.label}</span>
-                  <span className="text-[10px] text-mutedLavender">{spot.product}</span>
+                  <span className="text-[10px] text-dragonfruit font-medium">{spot.product} • Tap to View</span>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
 

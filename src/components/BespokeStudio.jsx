@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
+import { salonsConfig } from '../config/boutiqueConfig';
 import confetti from 'canvas-confetti';
 import {
   Scissors,
@@ -148,7 +149,8 @@ export const BespokeStudio = () => {
       measurements: {
         bust: formData.bust,
         waist: formData.waist,
-        hips: formData.hips
+        hips: formData.hips,
+        height: formData.height
       },
       estimatedPriceUSD: estimatedTotalUSD
     });
@@ -176,7 +178,7 @@ export const BespokeStudio = () => {
       email: '',
       phone: '',
       consultationType: 'Virtual 3D Video Fitting',
-      salonCity: 'Paris Atelier (Rue Saint-Honoré)',
+      salonCity: 'Paris Flagship (Rue Saint-Honoré)',
       date: '',
       time: '14:00 (Afternoon)',
       bust: '',
@@ -186,6 +188,8 @@ export const BespokeStudio = () => {
       notes: ''
     });
   };
+
+  const todayDate = new Date().toISOString().split('T')[0];
 
   return (
     <section id="bespoke-studio" className="py-24 bg-nightViolet relative scroll-mt-20 border-t border-cardBorder/40">
@@ -527,6 +531,27 @@ export const BespokeStudio = () => {
                         </div>
                       </div>
 
+                      {/* Salon City Selector if In-Person Appointment */}
+                      {formData.consultationType === 'In-Person Private Salon' && (
+                        <div className="animate-in fade-in">
+                          <label className="block text-xs font-semibold text-lightLavender mb-1.5">
+                            Select Flagship Salon Location *
+                          </label>
+                          <select
+                            name="salonCity"
+                            value={formData.salonCity}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-2.5 rounded-xl bg-inputBg border border-dragonfruit/60 text-lightLavender text-sm focus:outline-none focus:border-dragonfruit"
+                          >
+                            {salonsConfig.map((s) => (
+                              <option key={s.city} value={`${s.city} Salon (${s.location})`} className="bg-cardBg">
+                                {s.city}: {s.location} — {s.fullAddress}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+
                       {/* Date & Time */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -536,6 +561,7 @@ export const BespokeStudio = () => {
                           <input
                             type="date"
                             name="date"
+                            min={todayDate}
                             value={formData.date}
                             onChange={handleInputChange}
                             className="w-full px-4 py-2.5 rounded-xl bg-inputBg border border-inputBorder text-lightLavender text-sm focus:outline-none focus:border-dragonfruit"
@@ -570,7 +596,7 @@ export const BespokeStudio = () => {
                         <span className="text-xs font-semibold text-lightLavender block mb-2">
                           Optional Pre-Fitting Measurements (in inches)
                         </span>
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                           <input
                             type="text"
                             name="bust"
@@ -593,6 +619,14 @@ export const BespokeStudio = () => {
                             value={formData.hips}
                             onChange={handleInputChange}
                             placeholder="Hips (e.g. 37)"
+                            className="px-3 py-2 rounded-lg bg-inputBg border border-inputBorder text-mainHeading text-xs focus:outline-none focus:border-dragonfruit"
+                          />
+                          <input
+                            type="text"
+                            name="height"
+                            value={formData.height}
+                            onChange={handleInputChange}
+                            placeholder="Height (e.g. 5'8)"
                             className="px-3 py-2 rounded-lg bg-inputBg border border-inputBorder text-mainHeading text-xs focus:outline-none focus:border-dragonfruit"
                           />
                         </div>

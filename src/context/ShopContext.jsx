@@ -242,8 +242,10 @@ export const ShopProvider = ({ children }) => {
       clean === 'WELCOME25' ||
       clean === 'MAISON25'
     ) {
+      const pCode = commerceConfig.promoCode || 'INDIA 2026';
       setDiscountPercent(commerceConfig.promoDiscountPercent || 25);
-      setAppliedPromo(commerceConfig.promoCode || 'INDIA 2026');
+      setAppliedPromo(pCode);
+      setPromoCode(pCode);
       addToast(`👑 VIP Privilege Code Applied: ${commerceConfig.promoDiscountPercent || 25}% OFF your entire order!`, 'success');
       return true;
     } else if (
@@ -253,8 +255,10 @@ export const ShopProvider = ({ children }) => {
       clean === 'DRAGONFRUIT' ||
       clean === 'SECRET20'
     ) {
+      const sCode = commerceConfig.secretPromoCode || 'DRAGONFRUIT20';
       setDiscountPercent(commerceConfig.secretDiscountPercent || 20);
-      setAppliedPromo(commerceConfig.secretPromoCode || 'DRAGONFRUIT20');
+      setAppliedPromo(sCode);
+      setPromoCode(sCode);
       addToast(`⚜️ Atelier Secret Code Applied: ${commerceConfig.secretDiscountPercent || 20}% OFF your order!`, 'success');
       return true;
     } else {
@@ -266,6 +270,7 @@ export const ShopProvider = ({ children }) => {
   const removePromo = () => {
     setDiscountPercent(0);
     setAppliedPromo('');
+    setPromoCode('');
     addToast('Promo coupon removed.', 'info');
   };
 
@@ -305,16 +310,16 @@ export const ShopProvider = ({ children }) => {
     setIsBookingsDrawerOpen(false);
   };
 
-  // Calculations
+  // Defensive Calculations
   const cartSubtotalUSD = cart.reduce(
-    (acc, item) => acc + item.product.priceUSD * item.quantity,
+    (acc, item) => acc + ((item?.product?.priceUSD || 0) * (item?.quantity || 1)),
     0
   );
-  const discountAmountUSD = (cartSubtotalUSD * discountPercent) / 100;
-  const isFreeShipping = cartSubtotalUSD >= commerceConfig.freeShippingThreshold;
-  const shippingFeeUSD = cart.length === 0 ? 0 : isFreeShipping ? 0 : commerceConfig.standardShippingFee;
+  const discountAmountUSD = (cartSubtotalUSD * (discountPercent || 0)) / 100;
+  const isFreeShipping = cartSubtotalUSD >= (commerceConfig.freeShippingThreshold || 500);
+  const shippingFeeUSD = cart.length === 0 ? 0 : isFreeShipping ? 0 : (commerceConfig.standardShippingFee || 45);
   const cartTotalUSD = Math.max(0, cartSubtotalUSD - discountAmountUSD + shippingFeeUSD);
-  const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const cartCount = cart.reduce((acc, item) => acc + (item?.quantity || 0), 0);
   const wishlistCount = wishlist.length;
   const bookingsCount = bookings.length;
 

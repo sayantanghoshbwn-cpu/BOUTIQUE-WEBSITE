@@ -34,9 +34,28 @@ export const CartDrawer = () => {
 
   const [inputCode, setInputCode] = useState('');
 
+  // Lock body scroll when cart is open & listen for Escape key
+  React.useEffect(() => {
+    if (!isCartOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsCartOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isCartOpen, setIsCartOpen]);
+
   if (!isCartOpen) return null;
 
-  const freeShippingThreshold = 500;
+  const freeShippingThreshold = commerceConfig.freeShippingThreshold || 500;
   const progressPercent = Math.min(100, (cartSubtotalUSD / freeShippingThreshold) * 100);
   const remainingForFree = Math.max(0, freeShippingThreshold - cartSubtotalUSD);
 

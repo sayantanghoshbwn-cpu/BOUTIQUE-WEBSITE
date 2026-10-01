@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import confetti from 'canvas-confetti';
 import { commerceConfig } from '../config/boutiqueConfig';
@@ -12,8 +12,11 @@ import {
   Truck,
   Sparkles,
   Crown,
-  Tag
+  Tag,
+  ShoppingBag,
+  ArrowRight
 } from 'lucide-react';
+import { smoothScrollTo } from '../utils/scrollUtils';
 
 export const CheckoutModal = () => {
   const {
@@ -53,6 +56,25 @@ export const CheckoutModal = () => {
   const [errors, setErrors] = useState({});
   const [isCompleted, setIsCompleted] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
+
+  // Lock body scroll and listen for Escape key
+  useEffect(() => {
+    if (!isCheckoutOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsCheckoutOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isCheckoutOpen, setIsCheckoutOpen]);
 
   if (!isCheckoutOpen) return null;
 
@@ -122,6 +144,28 @@ export const CheckoutModal = () => {
         </button>
 
         {!isCompleted ? (
+          cart.length === 0 ? (
+            <div className="py-16 text-center space-y-4 animate-in fade-in">
+              <div className="w-16 h-16 rounded-full bg-inputBg border border-inputBorder flex items-center justify-center mx-auto text-dragonfruit">
+                <ShoppingBag className="w-8 h-8" />
+              </div>
+              <h3 className="text-2xl font-fashion font-bold text-mainHeading">Your Shopping Bag is Empty</h3>
+              <p className="text-xs text-mutedLavender max-w-sm mx-auto font-light">
+                Please add at least one handcrafted bespoke creation to your bag before proceeding to checkout.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  handleClose();
+                  smoothScrollTo('collection', -85);
+                }}
+                className="mt-2 px-6 py-3 rounded-xl bg-dragonfruit text-white text-xs font-semibold uppercase tracking-wider shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] transition-all cursor-pointer inline-flex items-center gap-2"
+              >
+                <span>Explore Couture Catalog</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
           <div>
             <div className="flex items-center gap-2 text-dragonfruit text-xs font-semibold tracking-widest uppercase mb-1">
               <Lock className="w-3.5 h-3.5" />
@@ -453,6 +497,7 @@ export const CheckoutModal = () => {
 
             </form>
           </div>
+          )
         ) : (
           /* Order Complete Confirmation */
           <div className="py-12 text-center max-w-lg mx-auto space-y-6 animate-in zoom-in-95">

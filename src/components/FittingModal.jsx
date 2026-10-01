@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
+import { salonsConfig } from '../config/boutiqueConfig';
 import confetti from 'canvas-confetti';
 import {
   X,
@@ -29,7 +30,7 @@ export const FittingModal = () => {
     city: 'Paris Flagship (Rue Saint-Honoré)',
     mode: 'Virtual 3D Video Fitting',
     date: '',
-    time: '14:00',
+    time: '14:00 PM',
     garmentOfInterest: '',
     specialRequests: ''
   });
@@ -37,6 +38,25 @@ export const FittingModal = () => {
   const [errors, setErrors] = useState({});
   const [isSuccess, setIsSuccess] = useState(false);
   const [refId, setRefId] = useState('');
+
+  // Lock body scroll and listen for Escape key
+  useEffect(() => {
+    if (!isFittingModalOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeFittingModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isFittingModalOpen, closeFittingModal]);
 
   useEffect(() => {
     if (fittingInitialProduct) {
@@ -216,10 +236,14 @@ export const FittingModal = () => {
                     onChange={handleChange}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-inputBg border border-inputBorder text-lightLavender text-xs focus:outline-none focus:border-dragonfruit"
                   >
-                    <option value="Paris Flagship (Rue Saint-Honoré)" className="bg-cardBg">Paris Flagship (Rue Saint-Honoré)</option>
-                    <option value="London Salon (Mayfair)" className="bg-cardBg">London Salon (Mayfair)</option>
-                    <option value="Mumbai Studio (Taj Colaba)" className="bg-cardBg">Mumbai Studio (Taj Colaba)</option>
-                    <option value="Kolkata Heritage Lounge" className="bg-cardBg">Kolkata Heritage Lounge</option>
+                    <option value="Virtual 3D Video Fitting" className="bg-cardBg">
+                      🌐 Virtual 3D Video Fitting (Worldwide)
+                    </option>
+                    {salonsConfig.map((s) => (
+                      <option key={s.city} value={`${s.city} Flagship (${s.location})`} className="bg-cardBg">
+                        🏛️ {s.city}: {s.location}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -232,6 +256,7 @@ export const FittingModal = () => {
                   <input
                     type="date"
                     name="date"
+                    min={new Date().toISOString().split('T')[0]}
                     value={formData.date}
                     onChange={handleChange}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-inputBg border border-inputBorder text-lightLavender text-xs focus:outline-none focus:border-dragonfruit"

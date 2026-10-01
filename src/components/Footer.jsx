@@ -1,9 +1,12 @@
 import React from 'react';
+import { useShop } from '../context/ShopContext';
 import { Sparkles, MapPin, Phone, Mail, Globe, ShieldCheck, Share2 } from 'lucide-react';
 import { brandConfig, contactConfig, salonsConfig, socialConfig } from '../config/boutiqueConfig';
 import { smoothScrollTo } from '../utils/scrollUtils';
 
 export const Footer = () => {
+  const { navigateToCategory } = useShop();
+
   const scrollToTop = () => {
     smoothScrollTo(0);
   };
@@ -48,12 +51,12 @@ export const Footer = () => {
               Collections
             </h4>
             <ul className="space-y-2 text-xs text-mutedLavender">
-              <li><button onClick={() => smoothScrollTo('collection', -85)} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Haute Couture Gowns</button></li>
-              <li><button onClick={() => smoothScrollTo('collection', -85)} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Bridal & Festive Lehengas</button></li>
-              <li><button onClick={() => smoothScrollTo('collection', -85)} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Draped Silk Sarees & Corsets</button></li>
-              <li><button onClick={() => smoothScrollTo('collection', -85)} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Velvet Smoking Blazers</button></li>
-              <li><button onClick={() => smoothScrollTo('collection', -85)} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Artisanal Minaudières</button></li>
-              <li><button onClick={() => smoothScrollTo('lookbook', -85)} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Paris Runway Lookbook</button></li>
+              <li><button type="button" onClick={() => navigateToCategory('Dresses & Gowns')} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Haute Couture Gowns</button></li>
+              <li><button type="button" onClick={() => navigateToCategory('Bridal & Sarees')} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Bridal & Festive Lehengas</button></li>
+              <li><button type="button" onClick={() => navigateToCategory('Bridal & Sarees')} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Draped Silk Sarees & Corsets</button></li>
+              <li><button type="button" onClick={() => navigateToCategory('Blazers & Suits')} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Velvet Smoking Blazers</button></li>
+              <li><button type="button" onClick={() => navigateToCategory('Accessories')} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Artisanal Minaudières</button></li>
+              <li><button type="button" onClick={() => smoothScrollTo('lookbook', -85)} className="hover:text-dragonfruit transition-colors text-left cursor-pointer">Paris Runway Lookbook</button></li>
             </ul>
           </div>
 

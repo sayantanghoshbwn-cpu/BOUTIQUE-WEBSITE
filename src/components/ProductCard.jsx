@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import { Heart, Eye, ShoppingBag, Sparkles, Check } from 'lucide-react';
 
@@ -16,6 +16,12 @@ export const ProductCard = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState(() => (product.sizes && product.sizes[0]) || 'M');
   const [justAdded, setJustAdded] = useState(false);
   const isWishlisted = isInWishlist(product.id);
+
+  useEffect(() => {
+    setCurrentImageIndex(0);
+    setSelectedColor((product.colors && product.colors[0]) || { name: 'Signature', hex: '#FF2A8D' });
+    setSelectedSize((product.sizes && product.sizes[0]) || 'M');
+  }, [product]);
 
   const handleQuickAdd = (e) => {
     e.stopPropagation();

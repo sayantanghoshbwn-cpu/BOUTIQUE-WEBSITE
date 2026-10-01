@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import { PRODUCTS } from '../data/products';
 import { X, Search, Sparkles, ArrowRight } from 'lucide-react';
@@ -12,6 +12,25 @@ export const SearchModal = () => {
   } = useShop();
 
   const [query, setQuery] = useState('');
+
+  // Lock body scroll and listen for Escape key
+  useEffect(() => {
+    if (!isSearchOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsSearchOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isSearchOpen, setIsSearchOpen]);
 
   const searchResults = useMemo(() => {
     if (!query.trim()) return PRODUCTS.slice(0, 4);

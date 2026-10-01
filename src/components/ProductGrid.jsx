@@ -12,29 +12,39 @@ export const ProductGrid = () => {
   const [sortBy, setSortBy] = useState('featured');
   const [showFiltersBar, setShowFiltersBar] = useState(false);
 
-  // Filter and sort products
+  // Robust keyword-aware filter and sort products
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((p) => {
       // Category filter
       if (selectedCategory !== 'all' && p.category !== selectedCategory) {
         return false;
       }
-      // Fabric filter
-      if (selectedFabric !== 'All Fabrics' && !p.fabric.toLowerCase().includes(selectedFabric.toLowerCase())) {
-        return false;
+      
+      // Fabric filter (flexible multi-token matching)
+      if (selectedFabric !== 'All Fabrics') {
+        const pFabric = (p.fabric + ' ' + (p.fabricComposition || '')).toLowerCase();
+        const fabricTokens = selectedFabric.toLowerCase().replace(/&/g, '').split(/\s+/).filter(Boolean);
+        const matchesFabric = fabricTokens.some((token) => pFabric.includes(token));
+        if (!matchesFabric) return false;
       }
-      // Occasion filter
-      if (selectedOccasion !== 'All Occasions' && !p.occasion.toLowerCase().includes(selectedOccasion.toLowerCase())) {
-        return false;
+      
+      // Occasion filter (flexible multi-token matching)
+      if (selectedOccasion !== 'All Occasions') {
+        const pOccasion = p.occasion.toLowerCase();
+        const occasionTokens = selectedOccasion.toLowerCase().replace(/&/g, '').split(/\s+/).filter(Boolean);
+        const matchesOccasion = occasionTokens.some((token) => pOccasion.includes(token));
+        if (!matchesOccasion) return false;
       }
+      
       // Search query
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const matchName = p.name.toLowerCase().includes(query);
         const matchCat = p.category.toLowerCase().includes(query);
-        const matchFabric = p.fabric.toLowerCase().includes(query);
+        const matchFabric = (p.fabric + ' ' + (p.fabricComposition || '')).toLowerCase().includes(query);
         const matchDesc = p.description.toLowerCase().includes(query);
-        if (!matchName && !matchCat && !matchFabric && !matchDesc) return false;
+        const matchOccasion = p.occasion.toLowerCase().includes(query);
+        if (!matchName && !matchCat && !matchFabric && !matchDesc && !matchOccasion) return false;
       }
       return true;
     }).sort((a, b) => {

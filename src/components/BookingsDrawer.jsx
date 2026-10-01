@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import {
   X,
@@ -12,7 +12,8 @@ import {
   Sparkles,
   Phone,
   ShieldCheck,
-  Video
+  Video,
+  Ruler
 } from 'lucide-react';
 import { contactConfig } from '../config/boutiqueConfig';
 
@@ -22,8 +23,28 @@ export const BookingsDrawer = () => {
     closeBookingsDrawer,
     bookings,
     cancelBooking,
-    openFittingModal
+    openFittingModal,
+    formatPrice
   } = useShop();
+
+  // Lock body scroll and listen for Escape key
+  useEffect(() => {
+    if (!isBookingsDrawerOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeBookingsDrawer();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isBookingsDrawerOpen, closeBookingsDrawer]);
 
   if (!isBookingsDrawerOpen) return null;
 
@@ -142,6 +163,29 @@ export const BookingsDrawer = () => {
                       <span className="truncate">{booking.salon || booking.city || booking.mode || 'Virtual 3D Video Fitting'}</span>
                     </div>
                   </div>
+
+                  {/* Measurements & Price details if Bespoke */}
+                  {(booking.measurements?.bust || booking.measurements?.waist || booking.measurements?.hips || booking.estimatedPriceUSD) && (
+                    <div className="p-2.5 rounded-xl bg-nightViolet/70 border border-cardBorder/60 text-[10.5px] space-y-1">
+                      {(booking.measurements?.bust || booking.measurements?.waist || booking.measurements?.hips) && (
+                        <div className="flex items-center gap-2 text-mutedLavender">
+                          <Ruler className="w-3 h-3 text-dragonfruit shrink-0" />
+                          <span>
+                            Fit: {booking.measurements.bust ? `Bust ${booking.measurements.bust}"` : ''} 
+                            {booking.measurements.waist ? ` • Waist ${booking.measurements.waist}"` : ''} 
+                            {booking.measurements.hips ? ` • Hips ${booking.measurements.hips}"` : ''}
+                            {booking.measurements.height ? ` • Ht ${booking.measurements.height}` : ''}
+                          </span>
+                        </div>
+                      )}
+                      {booking.estimatedPriceUSD && (
+                        <div className="flex justify-between items-center pt-1 border-t border-cardBorder/40">
+                          <span className="text-mutedLavender">Estimated Atelier Investment:</span>
+                          <span className="font-fashion font-bold text-dragonfruit">{formatPrice(booking.estimatedPriceUSD)}</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Client Info */}
                   <div className="text-[11px] text-mutedLavender flex items-center justify-between border-t border-cardBorder/60 pt-2">

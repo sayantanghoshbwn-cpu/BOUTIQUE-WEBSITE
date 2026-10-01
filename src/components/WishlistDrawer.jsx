@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import { PRODUCTS } from '../data/products';
 import { X, Heart, ShoppingBag, Trash2, ArrowRight } from 'lucide-react';
@@ -14,12 +14,34 @@ export const WishlistDrawer = () => {
     openQuickView
   } = useShop();
 
+  // Lock body scroll and listen for Escape key
+  useEffect(() => {
+    if (!isWishlistOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsWishlistOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isWishlistOpen, setIsWishlistOpen]);
+
   if (!isWishlistOpen) return null;
 
   const wishlistedProducts = PRODUCTS.filter((p) => wishlist.includes(p.id));
 
   const handleMoveToBag = (product) => {
-    addToCart(product, product.sizes[0], product.colors[0], 1);
+    const size = (product.sizes && product.sizes[0]) || 'M';
+    const color = (product.colors && product.colors[0]) || null;
+    setIsWishlistOpen(false);
+    addToCart(product, size, color, 1);
     toggleWishlist(product);
   };
 

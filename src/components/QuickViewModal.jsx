@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import {
   X,
@@ -9,7 +9,9 @@ import {
   ShieldCheck,
   Check,
   Ruler,
-  Star
+  Star,
+  Plus,
+  Minus
 } from 'lucide-react';
 
 export const QuickViewModal = () => {
@@ -29,6 +31,35 @@ export const QuickViewModal = () => {
   const [selectedSize, setSelectedSize] = useState('M');
   const [quantity, setQuantity] = useState(1);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
+
+  // Lock body scroll and listen for Escape key
+  useEffect(() => {
+    if (!isQuickViewOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeQuickView();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isQuickViewOpen, closeQuickView]);
+
+  // Reset indices on product change
+  useEffect(() => {
+    if (product) {
+      setActiveImageIndex(0);
+      setSelectedColor((product.colors && product.colors[0]) || null);
+      setSelectedSize((product.sizes && product.sizes[0]) || 'M');
+      setQuantity(1);
+    }
+  }, [product]);
 
   if (!isQuickViewOpen || !product) return null;
 
@@ -264,23 +295,48 @@ export const QuickViewModal = () => {
 
             {/* Action Buttons */}
             <div className="space-y-3 pt-4 border-t border-cardBorder">
-              <div className="flex gap-3">
+              <div className="flex items-center gap-3">
+                {/* Quantity Control Pill */}
+                <div className="flex items-center rounded-xl bg-inputBg border border-inputBorder px-1.5 py-1">
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                    className="p-2 text-mutedLavender hover:text-white hover:bg-cardBg rounded-lg transition-colors cursor-pointer"
+                    aria-label="Decrease quantity"
+                  >
+                    <Minus className="w-3.5 h-3.5" />
+                  </button>
+                  <span className="px-3 font-fashion font-bold text-mainHeading text-sm min-w-[28px] text-center">
+                    {quantity}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((prev) => prev + 1)}
+                    className="p-2 text-mutedLavender hover:text-white hover:bg-cardBg rounded-lg transition-colors cursor-pointer"
+                    aria-label="Increase quantity"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
                 {/* Primary Button: Dragonfruit with White text */}
                 <button
+                  type="button"
                   onClick={handleAddToCart}
-                  className="flex-1 py-3.5 px-6 rounded-xl bg-dragonfruit text-white font-semibold text-xs tracking-wider uppercase shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] hover:shadow-dragonfruit-lg transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer font-sans"
+                  className="flex-1 py-3.5 px-4 sm:px-6 rounded-xl bg-dragonfruit text-white font-semibold text-xs tracking-wider uppercase shadow-dragonfruit hover:bg-[#FF4696] hover:text-[#1E1033] hover:shadow-dragonfruit-lg transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer font-sans"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Add to Shopping Bag</span>
+                  <span>Add to Bag ({quantity})</span>
                 </button>
 
                 <button
+                  type="button"
                   onClick={handleBookFitting}
-                  className="py-3.5 px-5 rounded-xl bg-cardBg border border-cardBorder text-lightLavender text-xs font-semibold hover:border-dragonfruit hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="py-3.5 px-3.5 sm:px-5 rounded-xl bg-cardBg border border-cardBorder text-lightLavender text-xs font-semibold hover:border-dragonfruit hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
                   title="Book Private Fitting for this piece"
                 >
                   <Scissors className="w-4 h-4 text-dragonfruit" />
-                  <span>Custom Fit</span>
+                  <span className="hidden sm:inline">Custom Fit</span>
                 </button>
               </div>
 
